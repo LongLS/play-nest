@@ -1,12 +1,12 @@
 :root {
-  --bg: #07090d;
+  --bg: #060504;
   --ink: #f7f8fb;
-  --muted: #b7bdc9;
+  --muted: #c7b9aa;
   --line: rgba(255, 255, 255, 0.14);
-  --lime: #a7ff10;
-  --lime-strong: #64ff00;
-  --cyan: #4dd9ff;
-  --panel: rgba(8, 11, 16, 0.68);
+  --orange: #fe8602;
+  --orange-strong: #ff5a00;
+  --amber: #ffbd59;
+  --panel: rgba(10, 7, 5, 0.7);
   --shadow: rgba(0, 0, 0, 0.5);
 }
 
@@ -51,9 +51,9 @@ a {
   inset: 0;
   z-index: -3;
   background:
-    linear-gradient(90deg, rgba(2, 4, 8, 0.82), rgba(8, 12, 18, 0.38) 44%, rgba(2, 4, 8, 0.86)),
-    linear-gradient(180deg, rgba(4, 5, 9, 0.62), rgba(4, 5, 9, 0.35) 42%, rgba(4, 5, 9, 0.88)),
-    url("assets/playnest-hero.png") center / cover no-repeat;
+    linear-gradient(90deg, rgba(4, 3, 2, 0.84), rgba(12, 8, 4, 0.42) 44%, rgba(4, 3, 2, 0.88)),
+    linear-gradient(180deg, rgba(5, 4, 3, 0.5), rgba(5, 4, 3, 0.2) 42%, rgba(5, 4, 3, 0.92)),
+    url("assets/playnest-hero-orange.png") center / cover no-repeat;
 }
 
 .hero::before {
@@ -62,9 +62,9 @@ a {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 50% 38%, rgba(167, 255, 16, 0.13), transparent 27%),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    radial-gradient(circle at 50% 38%, rgba(254, 134, 2, 0.17), transparent 27%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.016) 1px, transparent 1px);
   background-size: auto, 42px 42px, 42px 42px;
   mix-blend-mode: screen;
   opacity: 0.8;
@@ -76,7 +76,7 @@ a {
   inset: auto 0 0;
   height: 36%;
   z-index: -1;
-  background: linear-gradient(180deg, transparent, rgba(4, 5, 9, 0.94));
+  background: linear-gradient(180deg, transparent, rgba(5, 4, 3, 0.96));
 }
 
 .site-header {
@@ -92,28 +92,14 @@ a {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   min-width: 0;
 }
 
-.brand__mark {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  color: #071008;
-  background: var(--lime);
-  border: 2px solid rgba(255, 255, 255, 0.82);
-  border-radius: 50%;
-  box-shadow: 0 0 32px rgba(167, 255, 16, 0.44);
-  font-size: 15px;
-  font-weight: 950;
-}
-
-.brand__text {
-  font-size: clamp(18px, 2vw, 28px);
-  font-weight: 950;
-  letter-spacing: 0;
+.brand__logo {
+  display: block;
+  width: clamp(142px, 16vw, 210px);
+  height: auto;
+  filter: drop-shadow(0 0 22px rgba(254, 134, 2, 0.42));
 }
 
 .nav {
@@ -134,8 +120,8 @@ a {
 }
 
 .nav a:hover {
-  color: var(--lime);
-  text-shadow: 0 0 18px rgba(167, 255, 16, 0.45);
+  color: var(--orange);
+  text-shadow: 0 0 18px rgba(254, 134, 2, 0.46);
 }
 
 .hero__content {
@@ -147,12 +133,12 @@ a {
 
 .eyebrow {
   margin: 0 0 10px;
-  color: var(--lime);
+  color: var(--orange);
   font-size: clamp(18px, 2.8vw, 36px);
   font-weight: 900;
   line-height: 1;
   text-transform: uppercase;
-  text-shadow: 0 0 26px rgba(167, 255, 16, 0.46);
+  text-shadow: 0 0 26px rgba(254, 134, 2, 0.5);
 }
 
 h1 {
@@ -213,9 +199,9 @@ h1 {
 
 .btn--primary {
   color: #081008;
-  background: var(--lime);
-  border-color: var(--lime);
-  box-shadow: 0 0 42px rgba(167, 255, 16, 0.42);
+  background: var(--orange);
+  border-color: var(--orange);
+  box-shadow: 0 0 42px rgba(254, 134, 2, 0.44);
 }
 
 .btn--ghost {
@@ -246,7 +232,7 @@ h1 {
 .booking-card p,
 .social-bar small {
   display: block;
-  color: var(--lime);
+  color: var(--orange);
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
@@ -265,7 +251,7 @@ h1 {
   right: clamp(18px, 5vw, 72px);
   bottom: 118px;
   width: min(330px, calc(100% - 36px));
-  border: 1px solid rgba(167, 255, 16, 0.36);
+  border: 1px solid rgba(254, 134, 2, 0.42);
   padding: 18px;
   background: var(--panel);
   box-shadow: 0 26px 80px var(--shadow);
@@ -320,14 +306,14 @@ h1 {
 
 .social-bar a:hover {
   transform: translateY(-2px);
-  border-color: rgba(167, 255, 16, 0.42);
-  background: rgba(167, 255, 16, 0.08);
+  border-color: rgba(254, 134, 2, 0.46);
+  background: rgba(254, 134, 2, 0.1);
 }
 
 .social-bar svg {
   width: 30px;
   height: 30px;
-  fill: var(--lime);
+  fill: var(--orange);
   flex: 0 0 auto;
 }
 
@@ -347,9 +333,9 @@ h1 {
   z-index: 2;
   width: clamp(56px, 10vw, 150px);
   aspect-ratio: 1;
-  border-top: clamp(10px, 1.5vw, 18px) solid var(--lime-strong);
-  border-right: clamp(10px, 1.5vw, 18px) solid var(--lime-strong);
-  filter: drop-shadow(0 0 22px rgba(100, 255, 0, 0.5));
+  border-top: clamp(10px, 1.5vw, 18px) solid var(--orange-strong);
+  border-right: clamp(10px, 1.5vw, 18px) solid var(--orange-strong);
+  filter: drop-shadow(0 0 22px rgba(254, 134, 2, 0.52));
 }
 
 .frame--left {
