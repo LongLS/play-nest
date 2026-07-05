@@ -423,10 +423,10 @@ h1 {
     position: absolute;
     top: 63%;
     left: 50%;
-    display: inline-grid;
-    grid-template-columns: max-content;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(10px, 2.2svh, 16px);
-    width: auto;
+    width: min(280px, 100%);
     margin: 0;
     padding-bottom: env(safe-area-inset-bottom);
     transform: translateX(-50%);
@@ -438,7 +438,6 @@ h1 {
     padding: 0;
     background: transparent;
     backdrop-filter: none;
-    justify-self: center;
   }
 
   .social-bar svg {
