@@ -373,7 +373,7 @@ h1 {
 
   .hero__content {
     position: absolute;
-    top: 50%;
+    top: 43%;
     left: 50%;
     width: min(100% - 48px, 560px);
     margin: 0;
@@ -420,14 +420,16 @@ h1 {
   }
 
   .social-bar {
-    position: static;
-    align-self: end;
+    position: absolute;
+    top: 63%;
+    left: 50%;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: clamp(10px, 2.2svh, 16px);
     width: min(280px, 100%);
-    margin: 0 auto;
+    margin: 0;
     padding-bottom: env(safe-area-inset-bottom);
+    transform: translateX(-50%);
   }
 
   .social-bar a {
