@@ -402,28 +402,6 @@ h1 {
   text-transform: uppercase;
 }
 
-/* ================== DECORATIVE FRAMES ================== */
-.frame {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  width: clamp(50px, 8vw, 130px);
-  aspect-ratio: 1;
-  border-top: clamp(8px, 1.2vw, 16px) solid var(--orange-strong);
-  border-right: clamp(8px, 1.2vw, 16px) solid var(--orange-strong);
-  filter: drop-shadow(0 0 20px rgba(254, 134, 2, 0.5));
-  pointer-events: none;
-}
-
-.frame--left {
-  left: clamp(-70px, -2.5vw, -16px);
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.frame--right {
-  right: clamp(-70px, -2.5vw, -16px);
-  transform: translateY(-50%) rotate(-135deg);
-}
 
 /* ================== RESPONSIVE DESIGN ================== */
 @media (max-width: 1024px) {
@@ -555,7 +533,4 @@ h1 {
     font-size: 10px;
   }
 
-  .frame {
-    display: none;
-  }
 }
