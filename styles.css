@@ -170,6 +170,24 @@ h1 {
   flex: 0 0 auto;
 }
 
+.btn__copy {
+  display: grid;
+  gap: 2px;
+  line-height: 1;
+  text-align: left;
+}
+
+.btn__label,
+.btn__phone {
+  display: block;
+}
+
+.btn__phone {
+  font-size: 13px;
+  font-weight: 850;
+  opacity: 0.72;
+}
+
 .btn:hover {
   transform: translateY(-2px);
 }
@@ -411,8 +429,12 @@ h1 {
   .btn {
     min-height: 52px;
     width: auto;
-    padding-inline: 24px;
-    font-size: 14px;
+    padding-inline: 20px;
+    font-size: 13px;
+  }
+
+  .btn__phone {
+    font-size: 12px;
   }
 
   .btn--ghost {
