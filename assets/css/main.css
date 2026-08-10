@@ -8802,6 +8802,17 @@ span {
   z-index: 9999;
 }
 
+@media (max-width: 991px), (hover: none), (pointer: coarse) {
+  .custom-cursor,
+  .mouseCursor,
+  .cursor-inner,
+  .cursor-outer {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
 .boder-10 {
   border-radius: 10px;
 }

@@ -50,15 +50,21 @@
         }
       });      
       
-      // Cursor movement
-      const cursor = document.createElement('div');
-        cursor.classList.add('custom-cursor');
+      // Cursor movement - desktop devices only
+      const supportsCustomCursor = window.matchMedia(
+        "(hover: hover) and (pointer: fine) and (min-width: 992px)"
+      ).matches;
+
+      if (supportsCustomCursor) {
+        const cursor = document.createElement("div");
+        cursor.classList.add("custom-cursor");
         document.body.appendChild(cursor);
 
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
         });
+      }
       
       //>> Video Popup Start <<//
       $(".img-popup").magnificPopup({
@@ -1140,7 +1146,9 @@
      
 
      //>> MouseCursor Start <<//
-    if ($(".mouseCursor").length > 0) {
+    if ($(".mouseCursor").length > 0 && window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (min-width: 992px)"
+    ).matches) {
       function itCursor() {
           var myCursor = jQuery(".mouseCursor");
           if (myCursor.length) {
