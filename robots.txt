@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://playnest.vn/sitemap.xml
