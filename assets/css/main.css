@@ -17470,4 +17470,115 @@ span {
     padding-top: 22px;
   }
 }
+.playnest-search-section {
+  position: relative;
+  background: #0b0f14;
+}
+.playnest-search-heading {
+  max-width: 920px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+.playnest-search-heading > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #F95E00;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+.playnest-search-heading h2,
+.playnest-search-faq h2 {
+  color: var(--white);
+}
+.playnest-search-heading p {
+  margin-top: 18px;
+  color: #b9bbc0;
+  font-size: 18px;
+  line-height: 1.75;
+}
+.playnest-search-heading a,
+.playnest-search-faq a {
+  color: #F95E00;
+  text-decoration: underline;
+}
+.playnest-search-features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.playnest-search-features article {
+  padding: 30px;
+  border: 1px solid rgba(249, 94, 0, 0.35);
+  background: #12161d;
+}
+.playnest-search-features i {
+  margin-bottom: 18px;
+  color: #F95E00;
+  font-size: 34px;
+}
+.playnest-search-features h3 {
+  margin-bottom: 12px;
+  color: var(--white);
+  font-size: 25px;
+}
+.playnest-search-features p,
+.playnest-search-faq p {
+  color: #b9bbc0;
+  line-height: 1.7;
+}
+.playnest-search-faq {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.playnest-search-faq h2 {
+  margin-bottom: 24px;
+  text-align: center;
+}
+.playnest-search-faq details {
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+.playnest-search-faq details:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+.playnest-search-faq summary {
+  position: relative;
+  padding: 20px 42px 20px 0;
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.playnest-search-faq summary::-webkit-details-marker {
+  display: none;
+}
+.playnest-search-faq summary::after {
+  content: "+";
+  position: absolute;
+  top: 17px;
+  right: 4px;
+  color: #F95E00;
+  font-size: 28px;
+}
+.playnest-search-faq details[open] summary::after {
+  content: "−";
+}
+.playnest-search-faq details p {
+  padding: 0 40px 20px 0;
+}
+@media (max-width: 767px) {
+  .playnest-search-features {
+    grid-template-columns: 1fr;
+  }
+  .playnest-search-heading p {
+    font-size: 16px;
+  }
+  .playnest-search-features article {
+    padding: 24px;
+  }
+  .playnest-search-faq summary {
+    font-size: 18px;
+  }
+}
 /*# sourceMappingURL=main.css.map */
