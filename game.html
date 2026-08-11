@@ -432,7 +432,36 @@
         </div>
        </section>
 
-
+       <!-- Game Detail Popup Start -->
+       <div class="game-detail-modal" id="game-detail-modal" hidden>
+            <div class="game-detail-modal__backdrop" data-game-modal-close></div>
+            <section class="game-detail-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="game-detail-title">
+                <button class="game-detail-modal__close" type="button" data-game-modal-close aria-label="Đóng thông tin game">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="game-detail-modal__layout">
+                    <div class="game-detail-modal__media">
+                        <img id="game-detail-image" alt="">
+                    </div>
+                    <div class="game-detail-modal__content">
+                        <span class="game-detail-platform" id="game-detail-platform"></span>
+                        <h2 id="game-detail-title"></h2>
+                        <div class="game-detail-genres" id="game-detail-genres"></div>
+                        <div class="game-detail-facts">
+                            <span><i class="fa-solid fa-users"></i><strong>Số người chơi</strong><em id="game-detail-players"></em></span>
+                            <span><i class="fa-solid fa-seedling"></i><strong>Mức phù hợp</strong><em id="game-detail-level"></em></span>
+                        </div>
+                        <p class="game-detail-description" id="game-detail-description"></p>
+                        <p class="game-detail-recommendation" id="game-detail-recommendation"></p>
+                        <div class="game-detail-actions">
+                            <a href="contact.html" class="gt-theme-btn">Liên hệ đặt phòng</a>
+                            <button type="button" class="gt-theme-btn gt-style-border" data-game-modal-close>Tiếp tục xem game</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+       </div>
+       <!-- Game Detail Popup End -->
 
         <!-- Footer Section Start -->
          <footer class="footer-section-5 fix bg-cover" style="background-image: url(assets/img/home-5/Footer.png);">
@@ -604,7 +633,19 @@
                 const mobileFilterToggle = document.getElementById("game-filter-mobile-toggle");
                 const mobileFilterCount = document.getElementById("game-filter-mobile-count");
                 const filterControls = document.getElementById("game-filter-controls");
+                const gameModal = document.getElementById("game-detail-modal");
+                const gameModalDialog = gameModal.querySelector(".game-detail-modal__dialog");
+                const gameModalImage = document.getElementById("game-detail-image");
+                const gameModalPlatform = document.getElementById("game-detail-platform");
+                const gameModalTitle = document.getElementById("game-detail-title");
+                const gameModalGenres = document.getElementById("game-detail-genres");
+                const gameModalPlayers = document.getElementById("game-detail-players");
+                const gameModalLevel = document.getElementById("game-detail-level");
+                const gameModalDescription = document.getElementById("game-detail-description");
+                const gameModalRecommendation = document.getElementById("game-detail-recommendation");
+                const gameModalCloseButtons = gameModal.querySelectorAll("[data-game-modal-close]");
                 let activePlatform = "ps5";
+                let lastFocusedGameCard = null;
 
                 initialCards.forEach(function (card) {
                     card.remove();
@@ -625,6 +666,60 @@
                     }) || beginnerGames.includes(game.name);
                 }
 
+                function getGameExperience(game) {
+                    const genre = game.genres[0] || "Giải trí";
+                    const experiences = {
+                        "Hành động": "Nhịp chơi sôi động, nhiều tình huống phản xạ và những màn đối đầu giàu năng lượng.",
+                        "Phiêu lưu": "Hành trình nhiều bất ngờ, phù hợp để khám phá và chinh phục thử thách cùng nhau.",
+                        "Phối hợp": "Người chơi cần trao đổi, chia nhiệm vụ và phối hợp nhịp nhàng để hoàn thành mục tiêu.",
+                        "Party": "Luật chơi dễ tiếp cận, nhiều khoảnh khắc vui nhộn và rất hợp cho buổi tụ tập bạn bè.",
+                        "Tiệc tùng": "Các màn chơi ngắn, vui và dễ đổi lượt giúp cả nhóm cùng tham gia.",
+                        "Đua xe": "Những đường đua tốc độ tạo cảm giác cạnh tranh trực tiếp và dễ khuấy động không khí.",
+                        "Thể thao": "Trải nghiệm thi đấu thể thao trực quan, thích hợp để chia đội và so tài tại chỗ.",
+                        "Đối kháng": "Các trận đấu trực tiếp giúp người chơi so kỹ năng và tạo không khí cạnh tranh hấp dẫn.",
+                        "Giải đố": "Thử thách tư duy và quan sát tạo cơ hội để cả nhóm cùng tìm lời giải.",
+                        "Bắn súng": "Lối chơi hành động tập trung vào ngắm bắn, di chuyển và phối hợp chiến thuật.",
+                        "Đi cảnh": "Các màn vượt chướng ngại mang đến cảm giác tiến bộ rõ ràng sau mỗi thử thách.",
+                        "Nấu ăn": "Cả nhóm cùng quản lý thời gian, chia việc và xử lý những tình huống bếp núc vui nhộn.",
+                        "Âm nhạc": "Nhịp điệu sôi động giúp người mới dễ hòa nhập và tạo bầu không khí vui vẻ.",
+                        "Mini-games": "Nhiều trò chơi nhỏ với luật đơn giản giúp mọi người nhanh chóng nhập cuộc.",
+                        "Mô phỏng": "Lối chơi mô phỏng gần gũi, cho phép người chơi thử nghiệm và sáng tạo theo cách riêng.",
+                        "Gia đình": "Nội dung thân thiện và cách chơi dễ hiểu, phù hợp cho nhiều độ tuổi cùng tham gia.",
+                        "Chiến thuật": "Người chơi cần tính toán, trao đổi và lựa chọn phương án để đạt kết quả tốt nhất.",
+                        "Kinh dị": "Bầu không khí căng thẳng và những tình huống bất ngờ tạo trải nghiệm đáng nhớ khi chơi cùng nhau."
+                    };
+                    return experiences[genre] || "Lối chơi đa dạng mang đến nhiều khoảnh khắc giải trí khi trải nghiệm tại PlayNest.";
+                }
+
+                function getGameRecommendation(game, beginnerFriendly) {
+                    const numbers = (game.players.match(/\d+/g) || []).map(Number);
+                    const maximumPlayers = numbers[numbers.length - 1] || 1;
+                    if (beginnerFriendly && maximumPlayers >= 3) {
+                        return "Gợi ý PlayNest: lựa chọn dễ làm quen cho hội bạn hoặc gia đình muốn cùng chơi ngay mà không cần học luật quá lâu.";
+                    }
+                    if (maximumPlayers >= 5) {
+                        return "Gợi ý PlayNest: phù hợp cho hội đông người muốn chia lượt, thi đấu và tạo nhiều khoảnh khắc vui nhộn trong phòng riêng.";
+                    }
+                    if (maximumPlayers === 2) {
+                        return "Gợi ý PlayNest: phù hợp cho cặp đôi hoặc hai người bạn muốn phối hợp, khám phá hay đối đầu trực tiếp.";
+                    }
+                    if (maximumPlayers === 1) {
+                        return "Gợi ý PlayNest: phù hợp khi bạn muốn tập trung khám phá game trên màn hình lớn trong không gian riêng tư.";
+                    }
+                    return "Gợi ý PlayNest: phù hợp cho nhóm nhỏ muốn cùng chơi PS5 hoặc Nintendo trong không gian game box riêng tư tại Hà Nội.";
+                }
+
+                function buildGameDetails(game, platform, beginnerFriendly) {
+                    const platformName = platform === "nintendo" ? "Nintendo Switch" : "PlayStation 5";
+                    const genreText = game.genres.map(function (genre) {
+                        return genre.toLocaleLowerCase("vi");
+                    }).join(", ");
+                    return {
+                        description: game.name + " là game " + genreText + " dành cho " + game.players + " trên " + platformName + " tại PlayNest Game Box Hà Nội. " + getGameExperience(game),
+                        recommendation: getGameRecommendation(game, beginnerFriendly)
+                    };
+                }
+
                 function renderGames(games, platform, imageFolder, createSlug) {
                     games.forEach(function (game) {
                         const slug = createSlug(game.name);
@@ -636,8 +731,21 @@
                         cardColumn.dataset.genres = game.genres.join("|");
                         cardColumn.dataset.players = game.players;
                         cardColumn.dataset.beginner = String(beginnerFriendly);
+                        const details = buildGameDetails(game, platform, beginnerFriendly);
+                        cardColumn.gameData = {
+                            name: game.name,
+                            players: game.players,
+                            genres: game.genres,
+                            platform: platform,
+                            platformName: platform === "nintendo" ? "Nintendo Switch" : "PlayStation 5",
+                            image: "assets/img/games/" + imageFolder + "/" + slug + ".jpg",
+                            slug: slug,
+                            beginnerFriendly: beginnerFriendly,
+                            description: details.description,
+                            recommendation: details.recommendation
+                        };
                         cardColumn.innerHTML = `
-                            <article class="gt-gaming-card-item-5 mt-0">
+                            <article class="gt-gaming-card-item-5 mt-0" tabindex="0" role="button" aria-label="Xem chi tiết ${game.name}">
                                 <div class="gt-gaming-image">
                                     <div class="game-card-media">
                                         <img
@@ -665,6 +773,7 @@
                                             <i class="fa-solid fa-users"></i>
                                             ${game.players}
                                         </p>
+                                        <span class="game-detail-hint">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></span>
                                     </div>
                                 </div>
                             </article>
@@ -677,6 +786,114 @@
                 renderGames(window.nintendoGames, "nintendo", "nintendo", window.toNintendoImageSlug);
 
                 const cards = Array.from(gameGrid.children);
+
+                function setGameUrl(slug) {
+                    const params = new URLSearchParams(window.location.search);
+                    if (slug) params.set("game", slug);
+                    else params.delete("game");
+                    const query = params.toString();
+                    window.history.replaceState(null, "", window.location.pathname + (query ? "?" + query : "") + window.location.hash);
+                }
+
+                function openGameModal(card, updateUrl) {
+                    const game = card.gameData;
+                    if (!game) return;
+                    lastFocusedGameCard = card.querySelector("article");
+                    gameModalImage.src = game.image;
+                    gameModalImage.alt = "Ảnh game " + game.name + " tại PlayNest";
+                    gameModalPlatform.textContent = game.platformName;
+                    gameModalTitle.textContent = game.name;
+                    gameModalGenres.innerHTML = "";
+                    game.genres.forEach(function (genre) {
+                        const item = document.createElement("span");
+                        item.textContent = genre;
+                        gameModalGenres.appendChild(item);
+                    });
+                    gameModalPlayers.textContent = game.players;
+                    gameModalLevel.textContent = game.beginnerFriendly ? "Dễ làm quen" : "Có thử thách";
+                    gameModalDescription.textContent = game.description;
+                    gameModalRecommendation.textContent = game.recommendation;
+                    gameModal.hidden = false;
+                    document.body.classList.add("game-modal-open");
+                    requestAnimationFrame(function () {
+                        gameModal.classList.add("is-open");
+                        gameModal.querySelector(".game-detail-modal__close").focus();
+                    });
+                    if (updateUrl !== false) setGameUrl(game.slug);
+                }
+
+                function closeGameModal(updateUrl) {
+                    if (gameModal.hidden) return;
+                    gameModal.classList.remove("is-open");
+                    document.body.classList.remove("game-modal-open");
+                    window.setTimeout(function () {
+                        gameModal.hidden = true;
+                        gameModalImage.removeAttribute("src");
+                    }, 220);
+                    if (updateUrl !== false) setGameUrl("");
+                    if (lastFocusedGameCard) lastFocusedGameCard.focus();
+                }
+
+                cards.forEach(function (card) {
+                    const trigger = card.querySelector("article");
+                    trigger.addEventListener("click", function () {
+                        openGameModal(card);
+                    });
+                    trigger.addEventListener("keydown", function (event) {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            openGameModal(card);
+                        }
+                    });
+                });
+
+                gameModalCloseButtons.forEach(function (button) {
+                    button.addEventListener("click", function () {
+                        closeGameModal();
+                    });
+                });
+
+                document.addEventListener("keydown", function (event) {
+                    if (event.key === "Escape" && !gameModal.hidden) closeGameModal();
+                    if (event.key === "Tab" && !gameModal.hidden) {
+                        const focusable = gameModalDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+                        const first = focusable[0];
+                        const last = focusable[focusable.length - 1];
+                        if (event.shiftKey && document.activeElement === first) {
+                            event.preventDefault();
+                            last.focus();
+                        } else if (!event.shiftKey && document.activeElement === last) {
+                            event.preventDefault();
+                            first.focus();
+                        }
+                    }
+                });
+
+                const catalogSchema = {
+                    "@context": "https://schema.org",
+                    "@type": "ItemList",
+                    "name": "Danh sách game PS5 và Nintendo tại PlayNest",
+                    "numberOfItems": cards.length,
+                    "itemListElement": cards.map(function (card, index) {
+                        const game = card.gameData;
+                        return {
+                            "@type": "ListItem",
+                            "position": index + 1,
+                            "item": {
+                                "@type": "VideoGame",
+                                "name": game.name,
+                                "description": game.description,
+                                "genre": game.genres,
+                                "gamePlatform": game.platformName,
+                                "url": "https://playnest.vn/game.html?platform=" + game.platform + "&game=" + encodeURIComponent(game.slug)
+                            }
+                        };
+                    })
+                };
+                const catalogSchemaElement = document.createElement("script");
+                catalogSchemaElement.type = "application/ld+json";
+                catalogSchemaElement.textContent = JSON.stringify(catalogSchema);
+                document.head.appendChild(catalogSchemaElement);
 
                 function updateGenreOptions(platform) {
                     const currentGenre = genreFilter.value;
@@ -721,6 +938,8 @@
                     if (genreFilter.value) params.set("genre", genreFilter.value);
                     if (playerFilter.value) params.set("players", playerFilter.value);
                     if (levelFilter.value) params.set("level", levelFilter.value);
+                    const openGame = new URLSearchParams(window.location.search).get("game");
+                    if (openGame && !gameModal.hidden) params.set("game", openGame);
 
                     const query = params.toString();
                     const newUrl = window.location.pathname + (query ? "?" + query : "") + window.location.hash;
@@ -790,6 +1009,7 @@
                 const requestedGenre = initialParams.get("genre");
                 const requestedPlayers = initialParams.get("players");
                 const requestedLevel = initialParams.get("level");
+                const requestedGame = initialParams.get("game");
 
                 if (["ps5", "nintendo"].includes(requestedPlatform)) {
                     activePlatform = requestedPlatform;
@@ -808,6 +1028,18 @@
                 }
 
                 showPlatform(activePlatform);
+
+                if (requestedGame) {
+                    const requestedCard = cards.find(function (card) {
+                        const matchesSlug = card.gameData.slug === requestedGame;
+                        const matchesPlatform = !requestedPlatform || card.gameData.platform === requestedPlatform;
+                        return matchesSlug && matchesPlatform;
+                    });
+                    if (requestedCard) {
+                        showPlatform(requestedCard.gameData.platform);
+                        openGameModal(requestedCard, true);
+                    }
+                }
             });
         </script>
     </body>
