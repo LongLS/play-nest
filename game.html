@@ -452,6 +452,10 @@
                             <span><i class="fa-solid fa-seedling"></i><strong>Mức phù hợp</strong><em id="game-detail-level"></em></span>
                         </div>
                         <p class="game-detail-description" id="game-detail-description"></p>
+                        <div class="game-detail-story-block">
+                            <h3>Cốt truyện &amp; trải nghiệm</h3>
+                            <p id="game-detail-story"></p>
+                        </div>
                         <p class="game-detail-recommendation" id="game-detail-recommendation"></p>
                         <div class="game-detail-actions">
                             <a href="contact.html" class="gt-theme-btn">Liên hệ đặt phòng</a>
@@ -642,6 +646,7 @@
                 const gameModalPlayers = document.getElementById("game-detail-players");
                 const gameModalLevel = document.getElementById("game-detail-level");
                 const gameModalDescription = document.getElementById("game-detail-description");
+                const gameModalStory = document.getElementById("game-detail-story");
                 const gameModalRecommendation = document.getElementById("game-detail-recommendation");
                 const gameModalCloseButtons = gameModal.querySelectorAll("[data-game-modal-close]");
                 let activePlatform = "ps5";
@@ -709,6 +714,54 @@
                     return "Gợi ý PlayNest: phù hợp cho nhóm nhỏ muốn cùng chơi PS5 hoặc Nintendo trong không gian game box riêng tư tại Hà Nội.";
                 }
 
+                function getGameStory(game) {
+                    const stories = {
+                        "A Way Out": "Hai tù nhân Leo và Vincent buộc phải tin tưởng nhau để vượt ngục, chạy trốn và giải quyết những mâu thuẫn trong quá khứ. Toàn bộ hành trình được xây dựng cho hai người phối hợp.",
+                        "Astro’s Playroom": "Astro khám phá bốn thế giới nằm bên trong hệ thống PlayStation 5, mỗi nơi giới thiệu một khả năng đặc biệt của tay cầm DualSense qua các màn đi cảnh vui nhộn.",
+                        "Biped": "Hai robot Aku và Sila cùng đi qua những hành tinh đầy máy móc, giải câu đố và kích hoạt lại các ngọn hải đăng. Người chơi phải điều khiển từng chân robot thật ăn ý.",
+                        "Cat Quest III": "Một chú mèo hải tặc lên đường giữa quần đảo Purribean để truy tìm kho báu huyền thoại, đối đầu băng cướp biển và khám phá các hòn đảo đầy bí mật.",
+                        "Cat Quest II": "Hai vị vua mèo và chó sát cánh trong chuyến phiêu lưu giành lại ngai vàng, kết nối hai vương quốc và chiến đấu với những thế lực đang gây chia rẽ.",
+                        "Human Fall Flat": "Bạn điều khiển những nhân vật mềm oặt vượt qua các thế giới kỳ quặc bằng cách kéo, đẩy, leo trèo và tận dụng vật lý. Niềm vui đến từ cả lời giải lẫn những pha xử lý ngoài dự kiến.",
+                        "It Takes Two™": "Cody và May bị biến thành hai con búp bê và phải cùng vượt qua một thế giới kỳ ảo để hàn gắn mối quan hệ. Mỗi màn chơi đều yêu cầu hai người hỗ trợ lẫn nhau.",
+                        "LEGO Horizon Adventures™": "Aloy cùng những người bạn bảo vệ thế giới LEGO đầy màu sắc trước các cỗ máy khổng lồ, kết hợp khám phá, chiến đấu và những tình huống hài hước.",
+                        "Marvel's Spider-Man 2": "Peter Parker và Miles Morales cùng bảo vệ New York khi đối mặt với Kraven, Venom và sức mạnh cộng sinh đang thử thách tình bạn, trách nhiệm của cả hai Spider-Man.",
+                        "Phogs": "Hai chú chó Red và Blue được nối chung bằng một chiếc bụng co giãn, cùng khám phá những thế giới về thức ăn, giấc ngủ và vui chơi bằng cách phối hợp hai đầu.",
+                        "REANIMAL": "Hai anh em bước vào một thế giới đảo hoang tăm tối để tìm những người bạn mất tích, đồng thời trốn chạy các sinh vật đáng sợ và những ký ức ám ảnh.",
+                        "Split Fiction": "Hai nhà văn Mio và Zoe bị mắc kẹt trong những câu chuyện khoa học viễn tưởng và kỳ ảo do chính họ sáng tác. Cả hai phải phối hợp để thoát khỏi cỗ máy đánh cắp ý tưởng.",
+                        "Trine 4: The Nightmare Prince": "Ba người hùng Amadeus, Pontius và Zoya lên đường tìm hoàng tử Selius, đối mặt những cơn ác mộng hóa thành hiện thực bằng phép thuật, chiến đấu và giải đố.",
+                        "Untitled Goose Game": "Bạn hóa thân thành một chú ngỗng tinh quái, lẻn qua ngôi làng yên bình và hoàn thành danh sách những trò quậy phá khiến người dân liên tục rơi vào tình huống dở khóc dở cười.",
+                        "GTA5": "Ba nhân vật Michael, Franklin và Trevor bị cuốn vào những phi vụ nguy hiểm tại Los Santos, nơi tham vọng, lòng trung thành và thế giới tội phạm liên tục va chạm.",
+                        "Jumanji": "Những người chơi bị cuốn vào thế giới Jumanji và phải hợp tác tìm các viên ngọc, vượt bẫy và đánh bại kẻ thù để tìm đường trở về.",
+                        "Cuphead": "Cuphead và Mugman thua cược với Quỷ dữ nên phải đi thu hồi các khế ước linh hồn. Hành trình nổi bật với những trận đấu trùm khó, hình ảnh hoạt hình cổ điển và phối hợp hai người.",
+                        "Brothers: A Tale of Two Sons": "Hai anh em rời quê hương đi tìm phương thuốc cứu cha. Mỗi người có khả năng riêng và phải cùng vượt qua một hành trình cảm xúc về gia đình, mất mát và trưởng thành.",
+                        "Luigi’s Mansion™ 3": "Luigi khám phá một khách sạn ma ám để giải cứu Mario và bạn bè, sử dụng máy hút ma Poltergust cùng bản sao Gooigi để giải đố và bắt những hồn ma tinh quái.",
+                        "Lovers in a Dangerous Spacetime": "Các phi hành gia điều khiển chung một con tàu, liên tục đổi vị trí giữa lái tàu, khiên chắn, vũ khí và bản đồ để giải cứu những sinh vật bị giam giữ trong không gian.",
+                        "Super Mario Odyssey": "Mario cùng chiếc mũ biết nói Cappy chu du qua nhiều vương quốc để ngăn Bowser tổ chức đám cưới với công chúa Peach, sử dụng khả năng nhập vai vào nhiều sinh vật và đồ vật.",
+                        "Super Mario 3D World + Bowser’s Fury": "Mario và bạn bè giải cứu các Sprixie trong những màn chơi 3D đầy bí mật; phần Bowser’s Fury đưa Mario tới vùng hồ rộng lớn để đối đầu một Bowser khổng lồ.",
+                        "Unravel Two": "Hai sinh vật Yarny kết nối bằng một sợi len cùng vượt qua thiên nhiên và những ký ức của con người. Người chơi phải đu dây, nâng đỡ và tìm đường cho nhau.",
+                        "The Smurfs – Dreams": "Các Xì Trum bước vào thế giới giấc mơ để đánh thức bạn bè khỏi kế hoạch của Gargamel, vượt qua những vùng đất biến đổi theo trí tưởng tượng của từng nhân vật.",
+                        "Teenage Mutant Ninja Turtles: Shredder's Revenge": "Leonardo, Raphael, Michelangelo, Donatello và đồng đội bảo vệ New York trước Foot Clan trong hành trình hành động mang phong cách hoạt hình và arcade cổ điển."
+                    };
+                    if (stories[game.name]) return stories[game.name];
+
+                    const primaryGenre = game.genres[0] || "Giải trí";
+                    const experienceByGenre = {
+                        "Party": "Không đặt nặng cốt truyện, game tập trung vào những vòng chơi ngắn, luật dễ hiểu và các tình huống bất ngờ để mọi người nhanh chóng cùng nhập cuộc.",
+                        "Tiệc tùng": "Trải nghiệm chính nằm ở các thử thách vui nhộn, đổi lượt nhanh và màn so tài trực tiếp, phù hợp để khuấy động buổi gặp mặt.",
+                        "Thể thao": "Game mô phỏng tinh thần thi đấu thể thao với các trận đấu nhanh, dễ chia đội và phù hợp cho người chơi muốn cạnh tranh trực tiếp.",
+                        "Đua xe": "Người chơi chọn xe hoặc nhân vật yêu thích, chinh phục nhiều đường đua và cạnh tranh vị trí bằng kỹ năng điều khiển cùng những pha bứt tốc.",
+                        "Đối kháng": "Trọng tâm là những trận đấu trực tiếp giữa các nhân vật có kỹ năng riêng, nơi việc đọc tình huống và phản xạ quyết định chiến thắng.",
+                        "Giải đố": "Mỗi màn đưa ra một bài toán mới về quan sát, logic hoặc phối hợp; niềm vui đến từ lúc cả nhóm cùng tìm ra lời giải.",
+                        "Nấu ăn": "Người chơi cùng vận hành căn bếp, chia nhau chuẩn bị nguyên liệu, nấu và phục vụ món ăn trước khi thời gian kết thúc.",
+                        "Âm nhạc": "Trải nghiệm xoay quanh việc bắt đúng nhịp, ghi điểm và cùng biểu diễn qua các bài hát, phù hợp cả khi đổi lượt lẫn chơi theo nhóm.",
+                        "Bắn súng": "Game đưa người chơi qua các màn chiến đấu nhịp độ cao, kết hợp di chuyển, ngắm bắn và hỗ trợ đồng đội để hoàn thành mục tiêu.",
+                        "Mô phỏng": "Game mô phỏng một hoạt động quen thuộc theo cách vui nhộn, cho phép người chơi thử nghiệm, sắp xếp công việc và cùng xử lý các tình huống phát sinh.",
+                        "Chiến thuật": "Mỗi lượt chơi yêu cầu quan sát, lên kế hoạch và lựa chọn thời điểm hành động hợp lý để vượt qua đối thủ hoặc hoàn thành mục tiêu.",
+                        "Kinh dị": "Bầu không khí bí ẩn dẫn người chơi qua những khu vực nguy hiểm, nơi phối hợp và giữ bình tĩnh quan trọng không kém việc tìm đường sống sót."
+                    };
+                    return game.name + " tập trung vào trải nghiệm " + primaryGenre.toLocaleLowerCase("vi") + ". " + (experienceByGenre[primaryGenre] || getGameExperience(game));
+                }
+
                 function buildGameDetails(game, platform, beginnerFriendly) {
                     const platformName = platform === "nintendo" ? "Nintendo Switch" : "PlayStation 5";
                     const genreText = game.genres.map(function (genre) {
@@ -740,9 +793,10 @@
                             platformName: platform === "nintendo" ? "Nintendo Switch" : "PlayStation 5",
                             image: "assets/img/games/" + imageFolder + "/" + slug + ".jpg",
                             slug: slug,
-                            beginnerFriendly: beginnerFriendly,
-                            description: details.description,
-                            recommendation: details.recommendation
+                        beginnerFriendly: beginnerFriendly,
+                        description: details.description,
+                        story: getGameStory(game),
+                        recommendation: details.recommendation
                         };
                         cardColumn.innerHTML = `
                             <article class="gt-gaming-card-item-5 mt-0" tabindex="0" role="button" aria-label="Xem chi tiết ${game.name}">
@@ -812,6 +866,7 @@
                     gameModalPlayers.textContent = game.players;
                     gameModalLevel.textContent = game.beginnerFriendly ? "Dễ làm quen" : "Có thử thách";
                     gameModalDescription.textContent = game.description;
+                    gameModalStory.textContent = game.story;
                     gameModalRecommendation.textContent = game.recommendation;
                     gameModal.hidden = false;
                     document.body.classList.add("game-modal-open");
@@ -882,7 +937,7 @@
                             "item": {
                                 "@type": "VideoGame",
                                 "name": game.name,
-                                "description": game.description,
+                                "description": game.description + " " + game.story,
                                 "genre": game.genres,
                                 "gamePlatform": game.platformName,
                                 "url": "https://playnest.vn/game.html?platform=" + game.platform + "&game=" + encodeURIComponent(game.slug)
