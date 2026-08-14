@@ -17825,4 +17825,71 @@ body.game-modal-open {
     text-align: center;
   }
 }
+/* PlayNest editorial pages */
+.playnest-blog-banner { min-height: 460px; }
+.playnest-blog-index { background: #0a0e13; }
+.playnest-blog-intro { max-width: 780px; margin-bottom: 44px; }
+.playnest-article-eyebrow { display: inline-block; margin-bottom: 12px; color: #F95E00; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.playnest-blog-intro h2 { color: #fff; font-size: clamp(36px, 5vw, 60px); line-height: 1.05; }
+.playnest-blog-intro p { color: #b7bbc1; font-size: 18px; line-height: 1.7; }
+.playnest-blog-card { overflow: hidden; border: 1px solid rgba(249,94,0,.35); background: #11161d; }
+.playnest-blog-card__image { display: block; height: 440px; overflow: hidden; }
+.playnest-blog-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.playnest-blog-card:hover .playnest-blog-card__image img { transform: scale(1.035); }
+.playnest-blog-card__body { padding: 32px; }
+.playnest-blog-card__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 16px; color: #aeb2b8; font-size: 14px; }
+.playnest-blog-card__meta span:first-child { color: #F95E00; font-weight: 700; }
+.playnest-blog-card h2 { margin: 0 0 14px; font-size: clamp(29px, 4vw, 42px); line-height: 1.15; }
+.playnest-blog-card h2 a { color: #fff; }
+.playnest-blog-card p { color: #b9bdc3; font-size: 17px; line-height: 1.7; }
+.playnest-article-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 8px; color: #F95E00; font-weight: 800; }
+.playnest-blog-sidebar { position: sticky; top: 130px; padding: 30px; border-top: 3px solid #F95E00; background: #11161d; }
+.playnest-blog-sidebar h3 { color: #fff; font-size: 28px; }
+.playnest-blog-sidebar ul { margin: 22px 0 28px; padding: 0; list-style: none; }
+.playnest-blog-sidebar li { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.1); color: #c5c8cd; }
+.playnest-article-page { background: #0a0e13; }
+.playnest-article-hero { position: relative; display: flex; align-items: end; min-height: 680px; padding: 210px 0 80px; }
+.playnest-article-hero::before { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg,rgba(5,8,12,.95),rgba(5,8,12,.62) 65%,rgba(5,8,12,.3)); }
+.playnest-article-hero__content { position: relative; max-width: 980px; }
+.playnest-article-hero h1 { color: #fff; font-size: clamp(43px, 6vw, 78px); line-height: 1.02; letter-spacing: .4px; }
+.playnest-article-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 24px; color: #d8dadd; }
+.playnest-article-meta i { margin-right: 6px; color: #F95E00; }
+.playnest-article-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 24px 0; color: #969ba2; font-size: 14px; }
+.playnest-article-breadcrumb a { color: #fff; }
+.playnest-article-breadcrumb i { color: #F95E00; font-size: 10px; }
+.playnest-article-content { padding: 45px 0 110px; }
+.playnest-article-content p,.playnest-article-content li { color: #c4c7cc; font-size: 18px; line-height: 1.85; }
+.playnest-article-content h2 { margin: 54px 0 18px; color: #fff; font-size: clamp(31px, 4vw, 44px); line-height: 1.15; }
+.playnest-article-content h3 { margin: 34px 0 10px; color: #fff; font-size: 27px; line-height: 1.25; }
+.playnest-article-content strong { color: #fff; }
+.playnest-article-content a { color: #F95E00; text-decoration: underline; text-underline-offset: 4px; }
+.playnest-article-content ul { margin: 24px 0; padding-left: 24px; }
+.playnest-article-content li { margin-bottom: 9px; }
+.playnest-article-lead { padding-left: 22px; border-left: 4px solid #F95E00; color: #fff !important; font-size: 22px !important; }
+.playnest-article-content figure { margin: 38px 0; }
+.playnest-article-content figure img { width: 100%; max-height: 620px; object-fit: cover; border: 1px solid rgba(249,94,0,.45); }
+.playnest-article-content figcaption { margin-top: 10px; color: #92979e; font-size: 14px; }
+.playnest-article-callout { margin: 52px 0; padding: 38px; border: 1px solid #F95E00; background: linear-gradient(135deg,rgba(249,94,0,.16),rgba(249,94,0,.03)); }
+.playnest-article-callout h2 { margin-top: 0; }
+.playnest-article-callout > div { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.playnest-article-callout a { color: #fff; text-decoration: none; }
+.playnest-article-faq details { margin-bottom: 12px; border: 1px solid rgba(255,255,255,.14); background: #10151b; }
+.playnest-article-faq summary { padding: 20px 22px; color: #fff; font-size: 19px; font-weight: 700; cursor: pointer; }
+.playnest-article-faq details p { padding: 0 22px 20px; }
+.playnest-article-author { display: flex; gap: 22px; align-items: center; margin-top: 60px; padding: 28px; border-top: 1px solid rgba(255,255,255,.15); border-bottom: 1px solid rgba(255,255,255,.15); }
+.playnest-article-author img { width: 170px; height: auto; }
+.playnest-article-author strong { display: block; margin-bottom: 4px; font-size: 20px; }
+.playnest-article-author p { margin: 0; font-size: 15px; }
+@media (max-width: 767px) {
+  .playnest-blog-banner { min-height: 360px; }
+  .playnest-blog-card__image { height: 270px; }
+  .playnest-blog-card__body { padding: 22px; }
+  .playnest-article-hero { min-height: 590px; padding: 180px 0 55px; }
+  .playnest-article-hero h1 { font-size: 39px; }
+  .playnest-article-content { padding-bottom: 75px; }
+  .playnest-article-content p,.playnest-article-content li { font-size: 17px; }
+  .playnest-article-callout { padding: 25px 20px; }
+  .playnest-article-callout > div { display: grid; }
+  .playnest-article-author { align-items: flex-start; flex-direction: column; }
+}
 /*# sourceMappingURL=main.css.map */
