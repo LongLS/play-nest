@@ -15,6 +15,7 @@ window.ps5Games = [
   { name: "Nickelodeon All-Star Brawl 2", players: "1-4 người", genres: ["Đối kháng", "Hành động"] },
   { name: "ODDBALLERS", players: "1-4 người", genres: ["Đối kháng"] },
   { name: "Overcooked! All You Can Eat", players: "1-4 người", genres: ["Phối hợp", "Nấu ăn"] },
+  { name: "Party Animals", players: "1-4 người", genres: ["Party", "Đối kháng"] },
   { name: "Phogs", players: "1-2 người", genres: ["Phối hợp"] },
   { name: "PlateUp!", players: "1-4 người", genres: ["Phối hợp", "Nấu ăn"] },
   { name: "Rabbids Party of Legends", players: "1-4 người", genres: ["Party"] },
