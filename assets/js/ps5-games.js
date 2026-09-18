@@ -5,7 +5,7 @@ window.ps5Games = [
   { name: "Biped", players: "1-2 người", genres: ["Phiêu lưu"] },
   { name: "Cat Quest III", players: "1-2 người", genres: ["Hành động", "Phiêu lưu"] },
   { name: "Disney Speedstorm", players: "1-4 người", genres: ["Đua xe"] },
-  { name: "eFootball™", players: "1-4 người", genres: ["Thể thao"] },
+  { name: "FIFA21", players: "1-4 người", genres: ["Thể thao", "Bóng đá"] },
   { name: "FC26", players: "1-4 người", genres: ["Thể thao"] },
   { name: "Human Fall Flat", players: "1-2 người", genres: ["Phiêu lưu"] },
   { name: "It Takes Two™", players: "1-2 người", genres: ["Phiêu lưu", "Phối hợp"] },
