@@ -455,12 +455,21 @@ li:has(> a[href="news-details.html"]) {
   .playnest-survey-submit { padding: 22px 18px; }
   .playnest-survey-intro h2 { font-size: 34px; }
   .playnest-survey-note { align-items: flex-start; }
-  .playnest-survey-card legend > span {
-    display: grid;
-    width: 36px;
-    height: 36px;
-    margin: 0 0 12px;
+  .playnest-survey-card legend {
+    float: left;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    font-size: 20px;
   }
+  .playnest-survey-card legend > span {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    margin: -3px 0 0;
+  }
+  .playnest-survey-card legend + * { clear: both; }
   .playnest-survey-help { margin-left: 0; }
   .playnest-inline-answer { align-items: stretch; flex-direction: column; gap: 8px; }
 }
