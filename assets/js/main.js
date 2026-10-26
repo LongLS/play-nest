@@ -1521,7 +1521,10 @@
         document.querySelectorAll('form[action^="https://formsubmit.co/"]').forEach(function(form) {
             const nextInput = form.querySelector(".playnest-form-next");
             if (nextInput) {
-                nextInput.value = new URL("thank-you.html", window.location.href).href;
+                const nextPage = form.id === "customer-survey-form"
+                    ? "survey-thank-you.html"
+                    : "thank-you.html";
+                nextInput.value = new URL(nextPage, window.location.href).href;
             }
 
             [
