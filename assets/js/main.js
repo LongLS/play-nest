@@ -1458,6 +1458,64 @@
         window.open("https://zalo.me/0926989896", "_blank", "noopener,noreferrer");
     });
 
+    // Require at least one answer in each multiple-choice survey group.
+    function preparePlaynestSurveyForm() {
+        const surveyForm = document.getElementById("customer-survey-form");
+        if (!surveyForm) return;
+
+        const checkboxGroups = Array.from(surveyForm.querySelectorAll("[data-required-checkbox-group]"));
+        const otherChoices = Array.from(surveyForm.querySelectorAll(".playnest-choice-other"));
+
+        function updateOtherInputs() {
+            otherChoices.forEach(function(choice) {
+                const selector = choice.querySelector('input[type="radio"], input[type="checkbox"]');
+                const textInput = choice.querySelector('input[type="text"]');
+                if (!selector || !textInput) return;
+                textInput.required = selector.checked;
+                if (!selector.checked) textInput.setCustomValidity("");
+            });
+        }
+
+        function validateCheckboxGroup(group) {
+            const checkboxes = Array.from(group.querySelectorAll('input[type="checkbox"]'));
+            const isValid = checkboxes.some(function(checkbox) { return checkbox.checked; });
+            const firstCheckbox = checkboxes[0];
+            const card = group.closest(".playnest-survey-card");
+
+            if (firstCheckbox) {
+                firstCheckbox.setCustomValidity(isValid ? "" : "Vui lòng chọn ít nhất một phương án.");
+            }
+            if (card) {
+                card.dataset.checkboxInvalid = String(!isValid);
+            }
+            return isValid;
+        }
+
+        checkboxGroups.forEach(function(group) {
+            group.addEventListener("change", function() {
+                validateCheckboxGroup(group);
+            });
+        });
+
+        surveyForm.addEventListener("change", updateOtherInputs);
+        updateOtherInputs();
+
+        surveyForm.addEventListener("submit", function(event) {
+            const invalidGroup = checkboxGroups.find(function(group) {
+                return !validateCheckboxGroup(group);
+            });
+
+            if (invalidGroup) {
+                event.preventDefault();
+                const firstCheckbox = invalidGroup.querySelector('input[type="checkbox"]');
+                if (firstCheckbox) firstCheckbox.reportValidity();
+                invalidGroup.closest(".playnest-survey-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", preparePlaynestSurveyForm);
+
     // Add useful context to every FormSubmit request and return users to PlayNest.
     function preparePlaynestContactForms() {
         document.querySelectorAll('form[action^="https://formsubmit.co/"]').forEach(function(form) {
