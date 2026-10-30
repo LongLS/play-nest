@@ -26,6 +26,7 @@ window.ps5Games = [
   { name: "Trials Fusion", players: "1-4 người", genres: ["Thể thao", "Đua xe"] },
   { name: "Trine 4: The Nightmare Prince", players: "1-4 người", genres: ["Phiêu lưu", "Hành động", "Đi cảnh"] },
   { name: "Untitled Goose Game", players: "1-2 người", genres: ["Phiêu lưu"] },
+  { name: "WWE 2K26", players: "1-4 người", genres: ["Thể thao", "Đối kháng"] },
   { name: "Ben 10: Power Trip!", players: "1-2 người", genres: ["Phiêu lưu"] },
   { name: "Bluey: The Videogame", players: "1-4 người", genres: ["Phiêu lưu", "Hành động"] },
   { name: "Brawlout", players: "1-4 người", genres: ["Đối kháng", "Hành động"] },
