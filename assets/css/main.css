@@ -427,6 +427,30 @@ li:has(> a[href="news-details.html"]) {
 .playnest-survey-submit > div strong { color: var(--theme); }
 .playnest-survey-submit .theme-btn { flex: 0 0 auto; border: 0; }
 .playnest-survey-submit .theme-btn i { margin-left: 8px; }
+.playnest-survey-submit .theme-btn:disabled {
+  cursor: wait;
+  opacity: 0.78;
+}
+.playnest-survey-storage-status {
+  margin: -4px 0 0;
+  padding: 13px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #c8cdd2;
+  background: #10151b;
+  font-size: 14px;
+}
+.playnest-survey-storage-status[data-state="loading"] {
+  border-color: rgba(249, 94, 0, 0.45);
+  color: #f6a36e;
+}
+.playnest-survey-storage-status[data-state="error"] {
+  border-color: rgba(255, 77, 77, 0.6);
+  color: #ff8989;
+}
+.playnest-survey-storage-status[data-state="success"] {
+  border-color: rgba(67, 193, 124, 0.55);
+  color: #76d8a2;
+}
 .playnest-survey-card[data-checkbox-invalid="true"] {
   border-color: #ff4d4d;
 }

@@ -296,13 +296,7 @@
                     <div class="playnest-survey-note"><i class="fa-solid fa-lock"></i> Không yêu cầu thông tin cá nhân. Các câu có dấu <strong>*</strong> là bắt buộc.</div>
                 </div>
 
-                <form action="https://formsubmit.co/playnest.vn@gmail.com" id="customer-survey-form" class="playnest-survey-form" method="POST">
-                    <input type="hidden" name="_subject" value="PlayNest - Đánh giá mới từ khảo sát khách hàng">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" class="playnest-form-next" value="">
-                    <input type="hidden" name="Nguồn gửi" value="Trang khảo sát khách hàng">
-                    <input type="text" name="_honey" class="d-none" tabindex="-1" autocomplete="off">
+                <form action="#" id="customer-survey-form" class="playnest-survey-form" method="POST">
 
                     <fieldset class="playnest-survey-card">
                         <legend><span>01</span> Hôm nay bạn đến PlayNest cùng ai? <em>*</em></legend>
@@ -450,9 +444,10 @@
                     </fieldset>
 
                     <div class="playnest-survey-submit">
-                        <div><i class="fa-regular fa-envelope"></i><span>Đánh giá sẽ được gửi trực tiếp đến <strong>playnest.vn@gmail.com</strong></span></div>
+                        <div><i class="fa-solid fa-database"></i><span>Đánh giá được lưu an toàn để đội ngũ <strong>PlayNest</strong> cải thiện trải nghiệm</span></div>
                         <button type="submit" class="theme-btn boder-10">Gửi đánh giá <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
+                    <p class="playnest-survey-storage-status" id="survey-storage-status" role="status" aria-live="polite" hidden></p>
                 </form>
             </div>
         </main>
@@ -617,5 +612,9 @@
         <script src="assets/js/wow.min.js"></script>
         <!--<< Main.js >>-->
         <script src="assets/js/main.js"></script>
+        <!--<< Supabase survey storage >>-->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="assets/js/supabase-config.js"></script>
+        <script src="assets/js/survey-storage.js"></script>
     </body>
 </html>
