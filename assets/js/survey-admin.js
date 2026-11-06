@@ -127,14 +127,11 @@
   }
 
   async function verifyAdmin(user) {
-    const result = await client
-      .from("admin_users")
-      .select("user_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (result.error) throw result.error;
-    return Boolean(result.data);
+    const membership = await client.from("program_users").select("user_id, display_name, role, can_redeem").eq("user_id", user.id).eq("active", true).maybeSingle();
+    if (!membership.error && membership.data) return membership.data;
+    const legacy = await client.from("admin_users").select("user_id").eq("user_id", user.id).maybeSingle();
+    if (legacy.error) throw legacy.error;
+    return legacy.data ? { user_id: user.id, display_name: user.email, role: "manager", can_redeem: true } : null;
   }
 
   async function loadResponses() {
@@ -162,8 +159,8 @@
 
   async function showDashboard(session) {
     try {
-      const allowed = await verifyAdmin(session.user);
-      if (!allowed) {
+      const profile = await verifyAdmin(session.user);
+      if (!profile) {
         await client.auth.signOut();
         showNotice("Tài khoản này chưa được cấp quyền quản trị khảo sát.", "error");
         showLogin();
@@ -173,7 +170,9 @@
       element("admin-login-section").hidden = true;
       element("admin-dashboard").hidden = false;
       element("admin-logout").hidden = false;
-      await loadResponses();
+      window.playnestAdmin = { client: client, session: session, profile: profile };
+      document.dispatchEvent(new CustomEvent("playnest:admin-ready", { detail: window.playnestAdmin }));
+      if (profile.role === "manager") await loadResponses();
     } catch (error) {
       showNotice("Không thể xác minh quyền quản trị: " + error.message, "error");
       showLogin();

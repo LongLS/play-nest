@@ -43,6 +43,26 @@ Open `/admin` and sign in with that email and password. There is no
 public signup flow. Row Level Security permits survey reads only when the
 signed-in user's ID exists in `admin_users`.
 
+## Membership migration
+
+Run `migrations/20261107000000_create_membership.sql` after both survey
+migrations. It preserves the survey tables and promotes existing `admin_users`
+to Membership managers.
+
+For every employee:
+
+1. Create a separate account in **Authentication > Users**.
+2. Sign in as a manager at `/admin`.
+3. Open **Cấu hình > Quản lý quyền nhân viên** and grant the appropriate role.
+4. Disable `active` immediately when an employee leaves.
+
+The browser has no direct table-wide access to member phone numbers or point
+balances. Exact phone lookup, earning approval, redemptions, reversals, and
+adjustments use database functions with role checks and audit logs. Never put a
+secret or `service_role` key in browser code.
+
+Demo data belongs in a separate Supabase project; see `demo/README.md`.
+
 ## Browser configuration
 
 `assets/js/supabase-config.js` contains only the project URL and Supabase
