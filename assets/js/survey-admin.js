@@ -84,6 +84,7 @@
   }
 
   function filteredResponses() {
+    if (!element("admin-search") || !element("admin-rating-filter")) return responses;
     const query = element("admin-search").value.trim().toLocaleLowerCase("vi");
     const rating = element("admin-rating-filter").value;
 
@@ -99,6 +100,7 @@
   function renderResponses() {
     const list = element("admin-response-list");
     const empty = element("admin-empty");
+    if (!list || !empty) return;
     const items = filteredResponses();
     list.replaceChildren();
 
@@ -120,6 +122,7 @@
   }
 
   function renderStats() {
+    if (!element("stat-total")) return;
     element("stat-total").textContent = String(responses.length);
     element("stat-service").textContent = average("service_rating");
     element("stat-food").textContent = average("food_rating");
@@ -135,6 +138,7 @@
   }
 
   async function loadResponses() {
+    if (!element("admin-response-list")) return;
     const refresh = element("admin-refresh");
     setLoading(refresh, true, "Đang tải...");
     showNotice("", "");
@@ -172,7 +176,7 @@
       element("admin-logout").hidden = false;
       window.playnestAdmin = { client: client, session: session, profile: profile };
       document.dispatchEvent(new CustomEvent("playnest:admin-ready", { detail: window.playnestAdmin }));
-      if (profile.role === "manager") await loadResponses();
+      if (profile.role === "manager" && element("admin-response-list")) await loadResponses();
     } catch (error) {
       showNotice("Không thể xác minh quyền quản trị: " + error.message, "error");
       showLogin();
@@ -246,10 +250,10 @@
       showLogin();
       showNotice("Đã đăng xuất khỏi trang quản trị.", "success");
     });
-    element("admin-refresh").addEventListener("click", loadResponses);
-    element("admin-export").addEventListener("click", exportCsv);
-    element("admin-search").addEventListener("input", renderResponses);
-    element("admin-rating-filter").addEventListener("change", renderResponses);
+    if (element("admin-refresh")) element("admin-refresh").addEventListener("click", loadResponses);
+    if (element("admin-export")) element("admin-export").addEventListener("click", exportCsv);
+    if (element("admin-search")) element("admin-search").addEventListener("input", renderResponses);
+    if (element("admin-rating-filter")) element("admin-rating-filter").addEventListener("change", renderResponses);
   }
 
   document.addEventListener("DOMContentLoaded", initialize);

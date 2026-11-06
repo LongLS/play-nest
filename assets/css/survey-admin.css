@@ -187,8 +187,8 @@ tr:last-child td { border-bottom: 0; }
 .admin-empty { padding: 48px 20px; color: var(--muted); text-align: center; }
 
 .ops-nav { display: flex; gap: 8px; overflow-x: auto; margin: -20px 0 18px; padding: 8px; border: 1px solid var(--line); background: var(--panel); }
-.ops-nav button { flex: 0 0 auto; padding: 10px 14px; border: 1px solid transparent; color: #c9cfd4; background: transparent; font-weight: 700; }
-.ops-nav button:hover,.ops-nav button.is-active { border-color: var(--orange); color: #fff; background: rgba(249,94,0,.12); }
+.ops-nav button,.ops-nav a { flex: 0 0 auto; padding: 10px 14px; border: 1px solid transparent; color: #c9cfd4; background: transparent; font-weight: 700; text-decoration: none; }
+.ops-nav button:hover,.ops-nav button.is-active,.ops-nav a:hover,.ops-nav a.is-active { border-color: var(--orange); color: #fff; background: rgba(249,94,0,.12); }
 .ops-userbar { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 28px; color: var(--muted); }
 .ops-userbar strong { color: var(--orange); }
 .ops-panel { display: none; }
