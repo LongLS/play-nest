@@ -148,12 +148,11 @@
 
   async function loadPending() {
     if (profile.role !== "manager") return;
-    const result = await client.from("pending_earn_requests").select("*").order("created_at", { ascending: false });
-    if (result.error) throw result.error;
-    const body = byId("pending-list"); body.replaceChildren(); byId("pending-empty").hidden = result.data.length > 0;
-    result.data.forEach(function (item) {
+    const data = await rpc("earn_request_list", { p_status: "pending", p_search: null, p_from: null, p_to: null, p_page: 1, p_page_size: 100 });
+    const body = byId("pending-list"); body.replaceChildren(); byId("pending-empty").hidden = data.rows.length > 0;
+    data.rows.forEach(function (item) {
       const row = document.createElement("tr");
-      [item.invoice_code, item.member_code + "\n" + item.masked_phone, money(item.eligible_amount), item.points + (item.abnormal ? " ⚠" : ""), item.submitted_by_name].forEach(function (value) { const td = document.createElement("td"); td.textContent = value; row.appendChild(td); });
+      [item.invoice_code, item.member_code + "\n" + (item.display_name || ""), money(item.eligible_amount), item.points + (item.abnormal ? " ⚠" : ""), item.submitted_by_name].forEach(function (value) { const td = document.createElement("td"); td.textContent = value; row.appendChild(td); });
       const actions = document.createElement("td"); const approve = document.createElement("button"); const reject = document.createElement("button");
       approve.className = "table-action approve"; reject.className = "table-action"; approve.textContent = "Duyệt"; reject.textContent = "Từ chối";
       approve.addEventListener("click", function () { review(item.id, true); }); reject.addEventListener("click", function () { review(item.id, false); }); actions.append(approve, reject); row.appendChild(actions); body.appendChild(row);
