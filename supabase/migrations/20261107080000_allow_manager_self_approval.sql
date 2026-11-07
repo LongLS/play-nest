@@ -11,7 +11,7 @@ begin
   update public.members set pending_points=pending_points-v_req.points,available_points=available_points+(case when p_approve then v_req.points else 0 end),
     lifetime_points=lifetime_points+(case when p_approve then v_req.points else 0 end),visit_count=visit_count+(case when p_approve then 1 else 0 end),updated_at=now()
   where id=v_req.member_id returning available_points into v_balance;
-  update public.earn_requests set status=case when p_approve then 'approved' else 'rejected' end,reviewed_by=v_actor,reviewed_at=now(),review_reason=nullif(trim(p_reason),'') where id=p_request_id;
+  update public.earn_requests set status=case when p_approve then 'approved'::public.earn_status else 'rejected'::public.earn_status end,reviewed_by=v_actor,reviewed_at=now(),review_reason=nullif(trim(p_reason),'') where id=p_request_id;
   if p_approve then
     select point_expiry_months into v_expiry_months from public.program_settings where id=true;
     insert into public.point_ledger(member_id,type,points_delta,balance_after,earn_request_id,reason,expires_at,created_by)
