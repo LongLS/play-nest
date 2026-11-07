@@ -1548,3 +1548,16 @@
    
   
   })(jQuery); // End jQuery
+
+// Public PlayNest Club entry. Kept independent from the existing navigation behavior.
+document.addEventListener("DOMContentLoaded", function () {
+    var headerActions = document.querySelector(".header-right-icon");
+    if (!headerActions || headerActions.querySelector(".playnest-club-entry")) return;
+    var link = document.createElement("a");
+    link.href = "club/";
+    link.className = "playnest-club-entry";
+    link.textContent = "Đăng nhập";
+    link.setAttribute("aria-label", "Đăng nhập PlayNest Club");
+    link.style.cssText = "display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;margin-right:10px;border:1px solid #ff5a00;border-radius:6px;color:#fff;font-weight:700;line-height:1;white-space:nowrap";
+    headerActions.insertBefore(link, headerActions.firstChild);
+});

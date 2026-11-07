@@ -49,10 +49,26 @@ Run `migrations/20261107000000_create_membership.sql` after both survey
 migrations. It preserves the survey tables and promotes existing `admin_users`
 to Membership managers.
 
+If the Membership migration was applied before 2026-11-07, also run
+`migrations/20261107010000_harden_membership_dashboard.sql`. This follow-up
+synchronizes existing survey admins into Membership, lets active managers view
+the survey tab, and flags invoices using excluded promotions for manual review.
+
+Then run `migrations/20261107020000_complete_admin_dashboard.sql`. It adds the
+server-side paginated admin APIs, survey workflow fields, member detail and
+anonymization operations, earning/redemption history, phone verification,
+activity logs, and dashboard reporting series. Run migrations in filename order.
+
+Finally run `migrations/20261107030000_add_customer_club.sql`. It links a
+verified Supabase phone identity to exactly one member, adds lifetime points,
+customer-only profile APIs, one-time reward codes, cancellation/refunds, and
+customer data requests.
+
 For every employee:
 
 1. Create a separate account in **Authentication > Users**.
-2. Sign in as a manager at `/admin`.
+2. Sign in as a manager at `/admin`. Survey, Membership, earning, approval,
+   redemption, and program settings are tabs in the same dashboard.
 3. Open **Cấu hình > Quản lý quyền nhân viên** and grant the appropriate role.
 4. Disable `active` immediately when an employee leaves.
 
@@ -68,6 +84,25 @@ Demo data belongs in a separate Supabase project; see `demo/README.md`.
 `assets/js/supabase-config.js` contains only the project URL and Supabase
 publishable key. A publishable key is expected to be visible in browser code.
 Never add a secret key or legacy `service_role` key to this repository.
+
+## Customer phone and password login
+
+Run `migrations/20261107050000_member_password_login.sql`, then deploy the
+`manage-member-auth` Edge Function. An authorized employee creates a member;
+the function creates a private phone-derived Auth alias and returns a random
+temporary password once. The customer signs in with phone + temporary password
+and must choose a new password before viewing membership data.
+
+Deploy with the Supabase CLI after linking the project:
+
+```sh
+supabase functions deploy manage-member-auth
+```
+
+The function reads `SUPABASE_SERVICE_ROLE_KEY` only from Supabase's managed
+server environment. Never copy that key to browser JavaScript. A forgotten
+password is reset at the counter after identity verification and is recorded in
+the audit log. Phone/SMS providers are not required for this flow.
 
 ## Submission flow
 

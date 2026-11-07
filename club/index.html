@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PlayNest Club — xem điểm, tiến trình và đổi quà.">
+  <title>PlayNest Club</title>
+  <link rel="shortcut icon" href="../assets/img/favicon.svg?v=playnest-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@400;600;700;800&amp;display=swap&amp;subset=vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/club.css">
+</head>
+<body>
+  <header class="club-header"><a href="../index.html"><img src="../assets/img/logo/white-logo.svg" alt="PlayNest"></a><button id="club-logout" class="button button--ghost" hidden>Đăng xuất</button></header>
+  <main class="club-shell">
+    <p id="club-notice" class="notice" role="status" aria-live="polite" hidden></p>
+
+    <section id="auth-screen" class="auth-card">
+      <div><span class="eyebrow">PLAYNEST CLUB</span><h1>Điểm vui chơi,<br>quà thật chất.</h1><p>Đăng nhập bằng số điện thoại và mật khẩu được PlayNest cấp.</p></div>
+      <form id="login-form" class="stack"><label><span>Số điện thoại</span><input id="phone" type="tel" inputmode="tel" autocomplete="username" placeholder="09xxxxxxxx" required></label><label><span>Mật khẩu</span><input id="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="button" type="submit">Đăng nhập</button><small>Quên mật khẩu? Hãy yêu cầu nhân viên PlayNest cấp mật khẩu tạm mới sau khi xác minh tại quầy.</small></form>
+    </section>
+
+    <section id="change-password-screen" class="auth-card" hidden><div><span class="eyebrow">BẢO MẬT TÀI KHOẢN</span><h1>Đổi mật khẩu</h1><p>Mật khẩu tạm chỉ dùng để đăng nhập lần đầu. Hãy đặt mật khẩu riêng trước khi xem thông tin thành viên.</p></div><form id="change-password-form" class="stack"><label><span>Mật khẩu mới</span><input id="new-password" type="password" autocomplete="new-password" minlength="8" required></label><label><span>Nhập lại mật khẩu</span><input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required></label><button class="button" type="submit">Lưu mật khẩu mới</button></form></section>
+
+    <section id="club-screen" hidden>
+      <article class="member-card"><div class="member-card__top"><img src="../assets/img/logo/white-logo.svg" alt="PlayNest"><span id="member-code"></span></div><div><span class="muted">Xin chào</span><h1 id="member-name"></h1></div><div class="points-grid"><div><strong id="available-points">0</strong><span>Điểm khả dụng</span></div><div><strong id="pending-points">0</strong><span>Điểm chờ duyệt</span></div><div><strong id="lifetime-points">0</strong><span>Tổng điểm tích lũy</span></div></div></article>
+
+      <nav class="club-nav" aria-label="PlayNest Club"><button class="active" data-view="home">Tổng quan</button><button data-view="rewards">Đổi quà</button><button data-view="history">Lịch sử</button><button data-view="account">Tài khoản</button></nav>
+
+      <section class="club-view active" id="view-home"><div class="section-title"><span class="eyebrow">MỤC TIÊU TIẾP THEO</span><h2 id="progress-title">Tiến trình đổi quà</h2><p id="progress-copy"></p></div><div class="progress"><div id="progress-fill"></div></div><div id="milestones" class="milestones"></div><div class="section-title"><h2>Quà gần bạn nhất</h2></div><div id="reward-preview" class="reward-grid"></div></section>
+      <section class="club-view" id="view-rewards"><div class="section-title"><span class="eyebrow">DANH MỤC QUÀ</span><h2>Đổi niềm vui bằng điểm</h2></div><div id="reward-list" class="reward-grid"></div></section>
+      <section class="club-view" id="view-history"><div class="section-title"><span class="eyebrow">HOẠT ĐỘNG CỦA BẠN</span><h2>Lịch sử điểm &amp; quà</h2></div><div id="active-codes"></div><h3>Lịch sử điểm</h3><div id="ledger-list" class="history-list"></div><h3>Lượt chơi ghi nhận</h3><div id="visit-list" class="history-list"></div></section>
+      <section class="club-view" id="view-account"><div class="section-title"><span class="eyebrow">TÀI KHOẢN</span><h2>Thông tin cá nhân</h2></div><form id="account-form" class="stack panel"><label><span>Tên hiển thị</span><input id="account-name" maxlength="120"></label><label><span>Số điện thoại</span><input id="account-phone" disabled></label><label class="check"><input id="account-marketing" type="checkbox"><span>Nhận thông tin ưu đãi</span></label><button class="button" type="submit">Lưu thay đổi</button></form><form id="data-request-form" class="stack panel"><h3>Quyền dữ liệu</h3><label><span>Loại yêu cầu</span><select id="data-request-type"><option value="view">Xem dữ liệu</option><option value="correct">Sửa dữ liệu</option><option value="delete">Xóa/ẩn danh dữ liệu</option></select></label><label><span>Nội dung</span><textarea id="data-request-note" rows="4" required></textarea></label><button class="button button--ghost" type="submit">Gửi yêu cầu</button></form></section>
+    </section>
+  </main>
+  <dialog id="redeem-dialog"><button class="dialog-close" type="button" aria-label="Đóng">×</button><span class="eyebrow">XÁC NHẬN ĐỔI QUÀ</span><h2 id="redeem-name"></h2><p id="redeem-condition"></p><strong id="redeem-cost"></strong><button id="confirm-redeem" class="button" type="button">Xác nhận dùng điểm</button></dialog>
+  <dialog id="code-dialog"><span class="eyebrow">MÃ ĐỔI QUÀ MỘT LẦN</span><h2 id="one-time-code"></h2><p>Đưa mã này cho nhân viên tại quầy. Mã có hiệu lực 30 phút và chỉ dùng một lần.</p><button class="button dialog-close" type="button">Đã hiểu</button></dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabase-config.js"></script>
+  <script src="../assets/js/club.js"></script>
+</body>
+</html>

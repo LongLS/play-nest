@@ -7,6 +7,7 @@ create type public.ledger_type as enum ('earn', 'redeem', 'adjustment', 'reversa
 
 create table public.program_users (
   user_id uuid primary key references auth.users(id) on delete cascade,
+  email text,
   display_name text not null,
   role public.staff_role not null default 'staff',
   active boolean not null default true,
@@ -153,7 +154,7 @@ returns text language sql immutable as $$ select regexp_replace(trim(p), '[^0-9+
 
 create or replace function public.lookup_member(p_phone text)
 returns table(id uuid, member_code text, masked_phone text, display_name text, available_points int, pending_points int, visit_count int)
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public,extensions as $$
 declare v_phone text := public.normalize_phone(p_phone); v_actor uuid := auth.uid();
 begin
   if public.membership_role() is null then raise exception 'Không có quyền'; end if;
@@ -168,7 +169,7 @@ end $$;
 
 create or replace function public.create_member(p_phone text,p_name text,p_membership_consent boolean,p_marketing_consent boolean,p_policy_version text)
 returns table(id uuid, member_code text, masked_phone text, display_name text, available_points int, pending_points int, visit_count int)
-language plpgsql security definer set search_path=public as $$
+language plpgsql security definer set search_path=public,extensions as $$
 declare v_phone text:=public.normalize_phone(p_phone); v_id uuid; v_actor uuid:=auth.uid();
 begin
   if public.membership_role() is null then raise exception 'Không có quyền'; end if;
@@ -288,9 +289,10 @@ begin
   if public.membership_role()<>'manager' then raise exception 'Chỉ quản lý được cấp quyền nhân viên'; end if;
   select id into v_user from auth.users where lower(email)=lower(trim(p_email)) limit 1;
   if v_user is null then raise exception 'Hãy tạo tài khoản trong Supabase Auth trước'; end if;
-  insert into public.program_users(user_id,display_name,role,active,can_redeem)
-  values(v_user,trim(p_display_name),p_role,p_active,p_can_redeem)
-  on conflict(user_id) do update set display_name=excluded.display_name,role=excluded.role,active=excluded.active,can_redeem=excluded.can_redeem,updated_at=now();
+  if v_user=auth.uid() and (not p_active or p_role<>'manager') then raise exception 'Không thể tự hạ quyền hoặc khóa tài khoản quản lý đang đăng nhập'; end if;
+  insert into public.program_users(user_id,display_name,role,active,can_redeem,email)
+  values(v_user,trim(p_display_name),p_role,p_active,p_can_redeem,lower(trim(p_email)))
+  on conflict(user_id) do update set display_name=excluded.display_name,role=excluded.role,active=excluded.active,can_redeem=excluded.can_redeem,email=excluded.email,updated_at=now();
   insert into public.membership_audit_log(actor_id,action,entity_type,entity_id,details)
   values(auth.uid(),'staff_access_saved','program_user',v_user::text,jsonb_build_object('role',p_role,'active',p_active));
 end $$;
