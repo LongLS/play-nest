@@ -302,3 +302,4 @@ tr:last-child td { border-bottom: 0; }
   .overview-charts { grid-template-columns: 1fr; }
 }
 .temporary-password{margin:18px 0;padding:18px;border:1px dashed #ff5a00;border-radius:10px;background:#0b1116;color:#ff7a33;font-size:30px;font-weight:800;letter-spacing:.12em;text-align:center;user-select:all}
+.member-auth-box{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:18px 0;padding:20px;border:1px solid #33404a;border-left:4px solid #ff5a00;border-radius:10px;background:#111820}.member-auth-box h3{margin:4px 0}.member-auth-box p{margin:0;color:#9ca8b2}.member-auth-box[hidden]{display:none!important}@media(max-width:700px){.member-auth-box{align-items:stretch;flex-direction:column}}

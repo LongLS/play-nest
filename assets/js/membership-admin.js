@@ -80,16 +80,17 @@
   function renderMember(member) {
     currentMember = member || null;
     const box = byId("member-result");
-    if (!member) { box.hidden = true; return; }
+    const authBox=byId("member-auth-box");
+    if (!member) { box.hidden = true;if(authBox)authBox.hidden=true;return; }
     box.replaceChildren();
     [["Mã thành viên", member.member_code], ["Số điện thoại", member.masked_phone], ["Tên", member.display_name || "Chưa cập nhật"], ["Điểm khả dụng", member.available_points], ["Điểm chờ", member.pending_points], ["Lượt ghé", member.visit_count]].forEach(function (item) {
       const div = document.createElement("div"); const span = document.createElement("span"); const strong = document.createElement("strong");
       span.textContent = item[0]; strong.textContent = escapeText(item[1]); div.append(span, strong); box.appendChild(div);
     });
     box.hidden = false;
+    if(authBox)authBox.hidden=profile.role!=="manager";
     byId("earn-member-code").value = member.member_code;
     if (byId("redeem-member-code")) byId("redeem-member-code").value = member.member_code;
-    if(profile.role==="manager"){const reset=document.createElement("button");reset.type="button";reset.className="admin-button admin-button--ghost";reset.textContent="Cấp lại mật khẩu tạm";reset.addEventListener("click",async function(){try{await issueMemberPassword(member,true);}catch(error){notice(error.message,"error");}});box.appendChild(reset);}
   }
 
   async function lookup(phone) {
@@ -211,6 +212,7 @@
   }
 
   function bindForms() {
+    byId("member-reset-password").addEventListener("click",async function(){if(!currentMember)return notice("Hãy tra cứu thành viên trước.","error");try{await issueMemberPassword(currentMember,true);}catch(error){notice(error.message,"error");}});
     byId("member-lookup-form").addEventListener("submit", async function (event) { event.preventDefault(); try { notice("", ""); await lookup(byId("member-phone").value); } catch (error) { lookupStatus(error.message, "error"); notice(error.message, "error"); } });
     byId("member-create-form").addEventListener("submit", async function (event) { event.preventDefault(); try { const rows = await rpc("create_member", { p_phone: byId("member-phone").value, p_name: byId("member-name").value, p_membership_consent: byId("member-consent").checked, p_marketing_consent: byId("marketing-consent").checked, p_policy_version: "2026-11" }); renderMember(rows[0]); byId("member-create-box").hidden = true; await issueMemberPassword(rows[0],false);notice("Đã tạo thành viên và tài khoản đăng nhập.", "success"); } catch (error) { notice(error.message, "error"); } });
     byId("earn-form").addEventListener("submit", async function (event) { event.preventDefault(); if (!currentMember) return notice("Hãy tra cứu thành viên trước.", "error"); if (!window.confirm("Gửi yêu cầu tích điểm để quản lý đối soát?")) return; try { await rpc("submit_earn_request", { p_member_id: currentMember.id, p_invoice_code: byId("earn-invoice").value, p_paid_amount: Number(byId("earn-paid").value), p_eligible_amount: Number(byId("earn-eligible").value), p_occurred_at: new Date(byId("earn-time").value).toISOString(), p_room_type: byId("earn-room").value, p_applied_program: byId("earn-program").value || null }); notice("Đã gửi yêu cầu, điểm đang chờ quản lý duyệt.", "success"); event.target.reset(); byId("earn-member-code").value = currentMember.member_code; await Promise.all([lookup(byId("member-phone").value),loadEarns(1)]); } catch (error) { notice(error.message, "error"); } });
