@@ -148,15 +148,22 @@
 
   async function loadPending() {
     if (profile.role !== "manager") return;
-    const data = await rpc("earn_request_list", { p_status: "pending", p_search: null, p_from: null, p_to: null, p_page: 1, p_page_size: 100 });
-    const body = byId("pending-list"); body.replaceChildren(); byId("pending-empty").hidden = data.rows.length > 0;
-    data.rows.forEach(function (item) {
+    const refresh = byId("pending-refresh"); const empty = byId("pending-empty");
+    refresh.disabled = true; refresh.textContent = "Đang tải…"; empty.hidden = false; empty.textContent = "Đang tải yêu cầu…";
+    try {
+      const data = await rpc("earn_request_list", { p_status: "pending", p_search: null, p_from: null, p_to: null, p_page: 1, p_page_size: 100 });
+      const rows = Array.isArray(data && data.rows) ? data.rows : [];
+      const body = byId("pending-list"); body.replaceChildren(); empty.hidden = rows.length > 0; empty.textContent = "Chưa có yêu cầu chờ duyệt.";
+      rows.forEach(function (item) {
       const row = document.createElement("tr");
       [item.invoice_code, item.member_code + "\n" + (item.display_name || ""), money(item.eligible_amount), item.points + (item.abnormal ? " ⚠" : ""), item.submitted_by_name].forEach(function (value) { const td = document.createElement("td"); td.textContent = value; row.appendChild(td); });
       const actions = document.createElement("td"); const approve = document.createElement("button"); const reject = document.createElement("button");
       approve.className = "table-action approve"; reject.className = "table-action"; approve.textContent = "Duyệt"; reject.textContent = "Từ chối";
       approve.addEventListener("click", function () { review(item.id, true); }); reject.addEventListener("click", function () { review(item.id, false); }); actions.append(approve, reject); row.appendChild(actions); body.appendChild(row);
-    });
+      });
+    } catch (error) {
+      empty.hidden = false; empty.textContent = "Không tải được yêu cầu: " + error.message; throw error;
+    } finally { refresh.disabled = false; refresh.textContent = "Làm mới"; }
   }
 
   async function loadMembers(page) {
@@ -237,7 +244,7 @@
       document.querySelector('[data-panel="earn-points"]').textContent = "Tích điểm / Lịch sử của tôi";
       if (!profile.can_redeem) document.querySelector('[data-panel="reward-redemption"]').hidden = true;
     }
-    document.querySelectorAll(".ops-nav button").forEach(function (button) { button.addEventListener("click", function () { showPanel(button.dataset.panel); }); });
+    document.querySelectorAll(".ops-nav button").forEach(function (button) { button.addEventListener("click", function () { showPanel(button.dataset.panel); if(button.dataset.panel==="earn-approval")loadPending().catch(function(error){notice("Không tải được yêu cầu chờ duyệt: "+error.message,"error");}); }); });
     window.addEventListener("hashchange", function () { showPanel(window.location.hash.slice(1)); });
     byId("membership-refresh").addEventListener("click", loadDashboard); byId("pending-refresh").addEventListener("click", loadPending);
     byId("overview-range").addEventListener("change",loadDashboard);byId("member-list-filter").addEventListener("click",function(){loadMembers(1);});byId("earn-list-filter").addEventListener("click",function(){loadEarns(1);});byId("redemption-filter").addEventListener("click",function(){loadRedemptions(1);});byId("activity-filter").addEventListener("click",function(){loadActivity(1);});
