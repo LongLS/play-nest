@@ -6,6 +6,7 @@ from public.admin_users a
 on conflict (user_id) do update set role='manager',active=true,can_redeem=true,updated_at=now();
 
 drop policy if exists "Admins can read survey responses" on public.survey_responses;
+drop policy if exists "Managers can read survey responses" on public.survey_responses;
 create policy "Managers can read survey responses"
 on public.survey_responses for select to authenticated
 using (
@@ -14,6 +15,7 @@ using (
 );
 
 drop policy if exists "Active users read rewards" on public.rewards;
+drop policy if exists "Authorized users read rewards" on public.rewards;
 create policy "Authorized users read rewards"
 on public.rewards for select to authenticated
 using (
