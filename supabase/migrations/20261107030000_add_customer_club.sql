@@ -200,7 +200,6 @@ begin
   if public.membership_role()<>'manager' then raise exception 'Chỉ Admin được duyệt'; end if;
   select * into v_req from public.earn_requests where id=p_request_id for update;
   if v_req.status<>'pending' then raise exception 'Yêu cầu đã được xử lý'; end if;
-  if v_req.submitted_by=v_actor then raise exception 'Không được tự duyệt yêu cầu của mình'; end if;
   update public.members set pending_points=pending_points-v_req.points,available_points=available_points+(case when p_approve then v_req.points else 0 end),
     lifetime_points=lifetime_points+(case when p_approve then v_req.points else 0 end),visit_count=visit_count+(case when p_approve then 1 else 0 end),updated_at=now()
   where id=v_req.member_id returning available_points into v_balance;
