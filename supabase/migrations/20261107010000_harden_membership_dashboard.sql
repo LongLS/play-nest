@@ -36,7 +36,7 @@ begin
   if p_occurred_at>now()+interval '5 minutes' then raise exception 'Thời gian hóa đơn không hợp lệ'; end if;
   insert into public.earn_requests(member_id,invoice_code,paid_amount,eligible_amount,points,occurred_at,room_type,applied_program,abnormal,submitted_by)
   values(p_member_id,upper(trim(p_invoice_code)),p_paid_amount,p_eligible_amount,v_points,p_occurred_at,nullif(trim(p_room_type),''),v_program,
-    p_paid_amount>=v_settings.abnormal_invoice_amount or v_program=any(v_settings.excluded_programs),v_actor)
+    coalesce(p_paid_amount>=v_settings.abnormal_invoice_amount,false) or coalesce(v_program=any(v_settings.excluded_programs),false),v_actor)
   returning id into v_id;
   update public.members set pending_points=pending_points+v_points,updated_at=now() where id=p_member_id;
   insert into public.membership_audit_log(actor_id,action,entity_type,entity_id,details)
