@@ -11030,7 +11030,183 @@ span {
 .playnest-hero-social {
   display: none;
 }
+.playnest-mobile-hero {
+  display: none;
+}
 @media (max-width: 767px) {
+  body > .header-2.header-7 {
+    display: none;
+  }
+  .playnest-mobile-hero {
+    position: relative;
+    z-index: 9;
+    display: block;
+    width: 100%;
+    height: 584px;
+    min-height: 584px;
+    overflow: hidden;
+    color: #fff;
+    background-color: #3b0c01;
+    background-image: url("../img/figma/mobile-hero/background.png");
+    background-repeat: no-repeat;
+    background-position: center -9px;
+    background-size: 130.8% auto;
+  }
+  .playnest-mobile-hero::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(180deg, #3b0c01 0%, rgba(59, 12, 1, 0.84) 45.252%, rgba(59, 12, 1, 0) 70.905%), linear-gradient(0deg, #3b0c01 7.956%, rgba(59, 12, 1, 0) 21.997%);
+    pointer-events: none;
+  }
+  .playnest-mobile-hero__topbar {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    backdrop-filter: blur(3.45px);
+  }
+  .playnest-mobile-hero__login {
+    display: inline-flex;
+    width: 120px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid rgba(249, 94, 0, 0.5);
+    border-radius: 42px;
+    color: #fff;
+    font-family: "Saira Semi Condensed", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+  .playnest-mobile-hero__login:hover {
+    border-color: #f95e00;
+    color: #fff;
+  }
+  .playnest-mobile-hero__menu {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    line-height: 0;
+  }
+  .playnest-mobile-hero__content {
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .playnest-mobile-hero__brand {
+    display: flex;
+    width: 269px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+  }
+  .playnest-mobile-hero__brand img {
+    width: 163px;
+    height: 18px;
+  }
+  .playnest-mobile-hero h1 {
+    margin: 7px 0 0;
+    color: #fff;
+    font-family: "Saira Semi Condensed", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 36.72px;
+    letter-spacing: -1px;
+    text-transform: none;
+  }
+  .playnest-mobile-hero p {
+    margin: 8px 0 0;
+    color: #fff;
+    font-family: "Saira Semi Condensed", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+  .playnest-mobile-hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .playnest-mobile-hero__cta {
+    display: inline-flex;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border-radius: 42px;
+    color: #fff;
+    font-family: "Saira Semi Condensed", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+  .playnest-mobile-hero__cta:hover {
+    color: #fff;
+  }
+  .playnest-mobile-hero__cta--primary {
+    border: 1px solid #ed6838;
+    background: linear-gradient(90deg, rgba(249, 94, 0, 0.83), rgba(198, 74, 0, 0.83));
+  }
+  .playnest-mobile-hero__cta--secondary {
+    width: 196px;
+    border: 1px solid rgba(255, 255, 255, 0.46);
+    background: rgba(59, 12, 1, 0.08);
+  }
+  .playnest-mobile-hero__social {
+    position: absolute;
+    z-index: 1;
+    top: 514px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .playnest-mobile-hero__social a {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    color: #fff;
+    background: transparent;
+    font-size: 17px;
+  }
+  .playnest-mobile-hero__social a:hover {
+    border-color: #f95e00;
+    color: #fff;
+    background: rgba(249, 94, 0, 0.35);
+  }
+  .hero-section.hero-7 {
+    display: none;
+  }
   .playnest-hero-social {
     display: flex;
     align-items: center;
