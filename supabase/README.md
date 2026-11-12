@@ -97,12 +97,37 @@ Deploy with the Supabase CLI after linking the project:
 
 ```sh
 supabase functions deploy manage-member-auth
+supabase functions deploy manage-staff-auth
 ```
 
 The function reads `SUPABASE_SERVICE_ROLE_KEY` only from Supabase's managed
 server environment. Never copy that key to browser JavaScript. A forgotten
 password is reset at the counter after identity verification and is recorded in
 the audit log. Phone/SMS providers are not required for this flow.
+
+## Production Club rules (2026-11-12)
+
+Run `migrations/20261112000000_enforce_playnest_club_logic.sql` after every
+`20261107...` migration. It adds versioned policy history, reward inventory and
+per-member limits, configurable voucher stacking and booking limits, durable
+claim codes, customer reward history, and the v2 Admin APIs used by the current
+dashboard.
+
+Important behavior:
+
+- an invoice remains globally unique and points stay pending until Admin review;
+- reward redemption and point deduction happen in one database transaction;
+- claim-code validity uses each reward's configured `valid_days`;
+- an expired claim does not automatically refund points;
+- staff must enter the booking/invoice where a voucher is used;
+- historical transactions keep their original point and reward values when
+  policy settings change.
+
+Customer authentication currently uses the phone-derived private Auth alias and
+password flow described above, because the project intentionally does not
+depend on a paid SMS provider. The database membership key remains the
+normalized phone number. If Supabase SMS is enabled later, OTP can be added as
+an alternative sign-in method without changing point or reward records.
 
 ## Submission flow
 
