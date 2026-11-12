@@ -11042,15 +11042,15 @@ span {
     z-index: 9;
     display: block;
     width: 100%;
-    height: 584px;
+    height: 100svh;
     min-height: 584px;
     overflow: hidden;
     color: #fff;
     background-color: #3b0c01;
     background-image: url("../img/figma/mobile-hero/background.png");
     background-repeat: no-repeat;
-    background-position: center -9px;
-    background-size: 130.8% auto;
+    background-position: center top;
+    background-size: auto max(641px, 100%);
   }
   .playnest-mobile-hero::before {
     position: absolute;
@@ -11179,7 +11179,7 @@ span {
   .playnest-mobile-hero__social {
     position: absolute;
     z-index: 1;
-    top: 514px;
+    bottom: 26px;
     left: 12px;
     right: 12px;
     display: flex;
