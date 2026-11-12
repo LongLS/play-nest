@@ -61,7 +61,7 @@
   function showPanel(id) {
     if (!byId(id)) id = "membership-overview";
     document.querySelectorAll(".ops-panel").forEach(function (panel) { panel.classList.toggle("is-active", panel.id === id); });
-    document.querySelectorAll(".ops-nav button").forEach(function (button) { button.classList.toggle("is-active", button.dataset.panel === id); });
+    document.querySelectorAll(".ops-nav button").forEach(function (button) { const active=button.dataset.panel === id;button.classList.toggle("is-active",active);if(active)button.setAttribute("aria-current","page");else button.removeAttribute("aria-current"); });
     if (window.location.hash !== "#" + id) window.history.replaceState(null, "", "#" + id);
   }
 
@@ -101,7 +101,9 @@
     byId("earn-selected-meta").textContent=member.masked_phone+" · "+member.available_points+" điểm khả dụng · "+member.pending_points+" điểm chờ";
     byId("earn-selected-member").hidden=false;
     if (byId("redeem-member-code")) byId("redeem-member-code").value = member.member_code;
-    const earnNow=document.createElement("button");earnNow.type="button";earnNow.className="admin-button member-earn-button";earnNow.textContent="Tích điểm";earnNow.addEventListener("click",function(){byId("earn-dialog").showModal();byId("earn-invoice").focus();});box.appendChild(earnNow);
+    const earnNow=document.createElement("button");earnNow.type="button";earnNow.className="admin-button member-earn-button";
+    const earnIcon=document.createElement("img");earnIcon.className="ui-icon";earnIcon.src="../assets/img/admin-icons/coin-line.svg";earnIcon.alt="";earnIcon.setAttribute("aria-hidden","true");
+    earnNow.append(earnIcon,document.createTextNode("Tích điểm"));earnNow.addEventListener("click",function(){byId("earn-dialog").showModal();byId("earn-invoice").focus();});box.appendChild(earnNow);
   }
 
   async function lookup(phone) {
@@ -233,7 +235,7 @@
   }
 
   function bindForms() {
-    document.querySelectorAll("[data-settings-tab]").forEach(function(button){button.addEventListener("click",function(){var tab=button.dataset.settingsTab;document.querySelectorAll("[data-settings-tab]").forEach(function(item){item.classList.toggle("is-active",item===button);});document.querySelectorAll("[data-settings-panel]").forEach(function(panel){var active=panel.dataset.settingsPanel===tab;panel.classList.toggle("is-active",active);panel.hidden=!active;});});});
+    document.querySelectorAll("[data-settings-tab]").forEach(function(button){button.addEventListener("click",function(){var tab=button.dataset.settingsTab;document.querySelectorAll("[data-settings-tab]").forEach(function(item){var active=item===button;item.classList.toggle("is-active",active);item.setAttribute("aria-selected",String(active));});document.querySelectorAll("[data-settings-panel]").forEach(function(panel){var active=panel.dataset.settingsPanel===tab;panel.classList.toggle("is-active",active);panel.hidden=!active;});});});
     byId("earn-dialog-close").addEventListener("click",function(){byId("earn-dialog").close();});
     byId("earn-change-member").addEventListener("click",function(){byId("earn-dialog").close();showPanel("member-lookup");byId("member-phone").focus();});
     byId("earn-find-member").addEventListener("click",function(){showPanel("member-lookup");byId("member-phone").focus();});
@@ -255,8 +257,8 @@
     document.querySelectorAll("[data-manager-only]").forEach(function (node) { node.hidden = profile.role !== "manager"; });
     if (profile.role !== "manager") {
       document.querySelector('[data-panel="membership-overview"]').hidden = true;
-      document.querySelector('[data-panel="member-lookup"]').textContent = "Tra cứu / Thêm thành viên";
-      document.querySelector('[data-panel="earn-points"]').textContent = "Tích điểm / Lịch sử của tôi";
+      document.querySelector('[data-panel="member-lookup"] span').textContent = "Tra cứu / Thêm thành viên";
+      document.querySelector('[data-panel="earn-points"] span').textContent = "Tích điểm / Lịch sử của tôi";
       if (!profile.can_redeem) document.querySelector('[data-panel="reward-redemption"]').hidden = true;
     }
     document.querySelectorAll(".ops-nav button").forEach(function (button) { button.addEventListener("click", function () { showPanel(button.dataset.panel); if(button.dataset.panel==="earn-approval")loadPending().catch(function(error){notice("Không tải được yêu cầu chờ duyệt: "+error.message,"error");}); }); });
