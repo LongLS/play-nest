@@ -11034,7 +11034,63 @@ span {
   display: none;
 }
 @media (max-width: 767px) {
-  body > .header-2.header-7 {
+  .playnest-home > .header-2.header-7 {
+    display: none;
+  }
+  body:not(.playnest-home) > .header-2.header-7 {
+    background: rgba(29, 29, 29, 0.88);
+    backdrop-filter: blur(3.45px);
+  }
+  body:not(.playnest-home) > .header-2.header-7 .container-fluid {
+    padding: 0 15px;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .header-main {
+    min-height: 60px;
+    padding: 10px 0;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .header-main .logo,
+  body:not(.playnest-home) > .header-2.header-7 .header-button {
+    display: none;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .header-right,
+  body:not(.playnest-home) > .header-2.header-7 .header-right-icon {
+    width: 100%;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .header-right-icon {
+    justify-content: space-between;
+    gap: 0;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .playnest-club-entry {
+    width: 120px;
+    height: 40px;
+    margin-right: 0 !important;
+    padding: 11px 18px !important;
+    border-color: rgba(249, 94, 0, 0.5) !important;
+    border-radius: 42px !important;
+    font-family: "Saira Semi Condensed", sans-serif;
+    font-size: 14px;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .playnest-club-entry::before {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    content: "";
+    background: url("../img/figma/mobile-hero/user.svg") center / contain no-repeat;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .header__hamburger,
+  body:not(.playnest-home) > .header-2.header-7 .sidebar__toggle {
+    display: block;
+    width: 24px !important;
+    height: 24px !important;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .sidebar__toggle {
+    border: 0 !important;
+    background: transparent url("../img/figma/mobile-hero/menu.svg") center / 24px 24px no-repeat !important;
+  }
+  body:not(.playnest-home) > .header-2.header-7 .sidebar__toggle img {
     display: none;
   }
   .playnest-mobile-hero {
