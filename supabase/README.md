@@ -119,7 +119,7 @@ Important behavior:
 - reward redemption and point deduction happen in one database transaction;
 - claim-code validity uses each reward's configured `valid_days`;
 - an expired claim does not automatically refund points;
-- staff must enter the booking/invoice where a voucher is used;
+- staff only enters the customer's claim code; the system records the staff account and fulfillment time automatically;
 - historical transactions keep their original point and reward values when
   policy settings change.
 
