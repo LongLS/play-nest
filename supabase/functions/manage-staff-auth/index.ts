@@ -17,10 +17,25 @@ Deno.serve(async(req)=>{
     if(!manager?.active||manager.role!=="manager")return json({error:"Chỉ Admin được quản lý tài khoản nhân viên"},403);
     const body=await req.json(),username=String(body.username||"").trim().toLowerCase();
     if(!/^[a-z0-9._-]{3,40}$/.test(username))return json({error:"Tên đăng nhập không hợp lệ"},400);
-    if(!["staff","manager"].includes(body.role))return json({error:"Vai trò không hợp lệ"},400);
-    const email=username+"@staff.playnest.vn",password=temporaryPassword();
+    const email=username+"@staff.playnest.vn";
     const {data:list,error:listError}=await admin.auth.admin.listUsers({page:1,perPage:1000});if(listError)throw listError;
-    let account=list.users.find(item=>item.email?.toLowerCase()===email),created=false,temporary_password:string|undefined;
+    let account=list.users.find(item=>item.email?.toLowerCase()===email);
+    if(body.delete_account){
+      if(!account)return json({error:"Không tìm thấy tài khoản nhân viên"},404);
+      if(account.id===user.id)return json({error:"Không thể tự xóa tài khoản Admin đang đăng nhập"},400);
+      const {data:target,error:targetError}=await admin.from("program_users").select("role,display_name").eq("user_id",account.id).maybeSingle();if(targetError)throw targetError;
+      if(!target)return json({error:"Tài khoản không còn trong danh sách nhân viên"},404);
+      if(target.role==="manager"){
+        const {count,error:countError}=await admin.from("program_users").select("user_id",{count:"exact",head:true}).eq("role","manager").eq("active",true);if(countError)throw countError;
+        if((count||0)<=1)return json({error:"Không thể xóa Admin hoạt động cuối cùng"},400);
+      }
+      const {error:auditError}=await admin.from("membership_audit_log").insert({actor_id:user.id,action:"staff_account_deleted",entity_type:"program_user",entity_id:account.id,details:{username,display_name:target.display_name,role:target.role}});if(auditError)throw auditError;
+      const {error:accessError}=await admin.from("program_users").delete().eq("user_id",account.id);if(accessError)throw accessError;
+      const {error:deleteError}=await admin.auth.admin.deleteUser(account.id,true);if(deleteError)throw deleteError;
+      return json({deleted:true,username});
+    }
+    if(!["staff","manager"].includes(body.role))return json({error:"Vai trò không hợp lệ"},400);
+    const password=temporaryPassword();let created=false,temporary_password:string|undefined;
     if(!account){
       const createdUser=await admin.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{display_name:String(body.display_name||username),staff_username:username}});
       if(createdUser.error)throw createdUser.error;account=createdUser.data.user;created=true;temporary_password=password;

@@ -19,7 +19,7 @@
     member_lookup:"Tra cứu thông tin thành viên",member_created:"Tạo thành viên mới",member_updated:"Cập nhật trạng thái thành viên",member_phone_changed:"Thay đổi số điện thoại thành viên",member_anonymized:"Xóa thông tin nhận diện của thành viên",phone_verified:"Xác minh số điện thoại",
     earn_submitted:"Gửi yêu cầu tích điểm",earn_approved:"Duyệt yêu cầu tích điểm",earn_rejected:"Từ chối yêu cầu tích điểm",earn_cancelled:"Hủy yêu cầu tích điểm",earn_reversed:"Thu hồi số điểm đã cộng",points_adjusted:"Điều chỉnh điểm thành viên",points_expired:"Ghi nhận điểm hết hạn",
     reward_saved:"Thêm hoặc cập nhật phần thưởng",reward_deleted:"Xóa phần thưởng",reward_disabled:"Ngừng sử dụng phần thưởng",reward_redeemed:"Đổi phần thưởng cho khách",customer_reward_redeemed:"Khách xác nhận đổi phần thưởng",redemption_fulfilled:"Xác nhận đã giao quà",redemption_cancelled:"Hủy lượt đổi quà và hoàn điểm",redemption_expired:"Mã nhận quà đã hết hạn",
-    settings_updated:"Cập nhật cấu hình chương trình",staff_access_saved:"Cập nhật tài khoản và quyền nhân viên",survey_updated:"Cập nhật trạng thái khảo sát",survey_archived:"Lưu trữ khảo sát",
+    settings_updated:"Cập nhật cấu hình chương trình",staff_access_saved:"Cập nhật tài khoản và quyền nhân viên",staff_account_deleted:"Xóa tài khoản nhân viên",survey_updated:"Cập nhật trạng thái khảo sát",survey_archived:"Lưu trữ khảo sát",
     customer_identity_linked:"Liên kết tài khoản PlayNest Club",customer_account_updated:"Khách cập nhật tài khoản",customer_password_changed:"Khách thay đổi mật khẩu",customer_data_request:"Khách gửi yêu cầu về dữ liệu cá nhân"
   };
   const activityFields = {points:"Số điểm",points_refunded:"Điểm đã hoàn",balance_after:"Điểm còn lại",delta:"Mức điều chỉnh",reason:"Lý do",status:"Trạng thái",method:"Cách xác minh",note:"Ghi chú",role:"Vai trò",active:"Tài khoản hoạt động",program:"Chương trình",reward:"Phần thưởng",member:"Thành viên",booking_code:"Mã booking",applied_program:"Chương trình áp dụng",valid_until:"Có hiệu lực đến",expiry_months:"Hạn điểm (tháng)",spend_per_point:"Số tiền cho 1 điểm",self_approved:"Người gửi tự duyệt"};
@@ -73,6 +73,16 @@
     const data=await response.json();if(!response.ok)throw new Error(data.error||"Không thể quản lý tài khoản nhân viên");
     if(data.temporary_password){byId("member-temporary-password").textContent=data.temporary_password;byId("member-password-dialog").showModal();}
     return data;
+  }
+
+  async function deleteStaffAccount(item){
+    const username=staffUsername(item.email);if(!username)throw new Error("Tài khoản không có tên đăng nhập hợp lệ");
+    const confirmation=window.prompt("Thao tác này sẽ vô hiệu hóa đăng nhập và xóa tài khoản khỏi danh sách nhân viên.\n\nNhập chính xác tên đăng nhập “"+username+"” để xác nhận:");
+    if(confirmation===null)return false;
+    if(confirmation.trim().toLowerCase()!==username.toLowerCase())throw new Error("Tên đăng nhập xác nhận không khớp. Tài khoản chưa bị xóa.");
+    const sessionResult=await client.auth.getSession(),token=sessionResult.data.session&&sessionResult.data.session.access_token;if(!token)throw new Error("Phiên đăng nhập đã hết hạn");
+    const response=await fetch(window.playnestSupabaseConfig.url+"/functions/v1/manage-staff-auth",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token,"apikey":window.playnestSupabaseConfig.publishableKey},body:JSON.stringify({username:username,delete_account:true})});
+    const data=await response.json();if(!response.ok)throw new Error(data.error||"Không thể xóa tài khoản nhân viên");return true;
   }
 
   function showPanel(id) {
@@ -174,7 +184,7 @@
 
   async function loadStaff() {
     if (profile.role !== "manager") return;
-    const result=await client.from("program_users").select("user_id,email,display_name,role,active,can_redeem").order("display_name");if(result.error)throw result.error;const body=byId("staff-list");body.replaceChildren();result.data.forEach(function(item){const row=document.createElement("tr");row.append(cell(item.display_name),cell(staffUsername(item.email)||"—"),cell(item.role==="manager"?"Admin":"Nhân viên"),cell(item.can_redeem?"Có":"Không"),cell(item.active?"Hoạt động":"Đã khóa"));const actions=document.createElement("td");const edit=document.createElement("button");edit.className="table-action approve";edit.textContent="Sửa";edit.addEventListener("click",function(){byId("staff-email").value=staffUsername(item.email)||"";byId("staff-name").value=item.display_name;byId("staff-role").value=item.role;byId("staff-redeem").checked=item.can_redeem;byId("staff-active").checked=item.active;});actions.appendChild(edit);row.appendChild(actions);body.appendChild(row);});
+    const result=await client.from("program_users").select("user_id,email,display_name,role,active,can_redeem").order("display_name");if(result.error)throw result.error;const body=byId("staff-list");body.replaceChildren();result.data.forEach(function(item){const row=document.createElement("tr");row.append(cell(item.display_name),cell(staffUsername(item.email)||"—"),cell(item.role==="manager"?"Admin":"Nhân viên"),cell(item.can_redeem?"Có":"Không"),cell(item.active?"Hoạt động":"Đã khóa"));const actions=document.createElement("td");const edit=document.createElement("button");edit.className="table-action approve";edit.textContent="Sửa";edit.addEventListener("click",function(){byId("staff-email").value=staffUsername(item.email)||"";byId("staff-name").value=item.display_name;byId("staff-role").value=item.role;byId("staff-redeem").checked=item.can_redeem;byId("staff-active").checked=item.active;});const remove=document.createElement("button");remove.className="table-action";remove.textContent="Xóa tài khoản";remove.addEventListener("click",async function(){try{const deleted=await deleteStaffAccount(item);if(!deleted)return;notice("Đã xóa tài khoản "+staffUsername(item.email)+". Tài khoản này không thể đăng nhập lại.","success");await loadStaff();}catch(error){notice(error.message,"error");}});actions.append(edit,remove);row.appendChild(actions);body.appendChild(row);});
   }
 
   async function loadSettings() {
