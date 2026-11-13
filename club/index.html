@@ -8,10 +8,10 @@
   <link rel="shortcut icon" href="../assets/img/favicon.svg?v=playnest-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap&amp;subset=vietnamese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;600&amp;display=swap&amp;subset=vietnamese" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/club.css">
 </head>
-<body>
+<body class="club-auth-mode">
   <header class="club-header"><a href="../index.html?club-home=1"><img src="../assets/img/figma/club/white-logo.svg" alt="PlayNest"></a><button id="club-menu" class="club-menu" type="button" aria-label="Mở menu" aria-expanded="false"><img src="../assets/img/figma/club/menu.svg" alt=""></button></header>
   <main class="club-shell">
     <p id="club-notice" class="notice" role="status" aria-live="polite" hidden></p>
@@ -21,9 +21,18 @@
       <strong>Đang tải PlayNest Club</strong>
     </section>
 
-    <section id="auth-screen" class="auth-card" hidden>
-      <div><span class="eyebrow">PLAYNEST CLUB</span><h1>Điểm vui chơi,<br>quà thật chất.</h1><p>Đăng nhập bằng số điện thoại và mật khẩu được PlayNest cấp.</p></div>
-      <form id="login-form" class="stack"><label><span>Số điện thoại</span><input id="phone" type="tel" inputmode="tel" autocomplete="username" placeholder="09xxxxxxxx" required></label><label><span>Mật khẩu hoặc mật khẩu tạm</span><input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="Ví dụ: playnest0011" required></label><button class="button" type="submit">Đăng nhập</button><small>Quên mật khẩu? Hãy yêu cầu nhân viên PlayNest cấp mật khẩu tạm mới sau khi xác minh tại quầy.</small></form>
+    <section id="auth-screen" class="auth-card club-login-card" hidden>
+      <form id="login-form" class="club-login-form">
+        <div class="club-login-main">
+          <img class="club-login-wordmark" src="../assets/img/figma/club/club-wordmark.webp" alt="PlayNest Club">
+          <div class="club-login-fields">
+            <label><span>Số điện thoại</span><input id="phone" type="tel" inputmode="tel" autocomplete="username" placeholder="Nhập số điện thoại của bạn" required></label>
+            <label><span>Nhập mật khẩu</span><span class="club-password-control"><input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="Nhập mật khẩu của bạn" required><button id="password-toggle" type="button" aria-label="Hiện mật khẩu" aria-pressed="false"><img src="../assets/img/figma/club/password-eye.svg" alt=""></button></span></label>
+          </div>
+        </div>
+        <button class="button club-login-submit" type="submit">Đăng nhập</button>
+        <p class="club-login-help"><strong>Quên mật khẩu?</strong> Hãy yêu cầu nhân viên PlayNest cấp mật khẩu tạm mới sau khi xác minh tại quầy.</p>
+      </form>
     </section>
 
     <section id="change-password-screen" class="auth-card" hidden><div><span class="eyebrow">BẢO MẬT TÀI KHOẢN</span><h1>Đổi mật khẩu</h1><p>Bạn đã đăng nhập thành công bằng mật khẩu tạm. Bây giờ hãy đặt mật khẩu riêng trước khi xem thông tin thành viên.</p></div><form id="change-password-form" class="stack"><label><span>Mật khẩu mới</span><input id="new-password" type="password" autocomplete="new-password" minlength="8" required></label><label><span>Nhập lại mật khẩu</span><input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required></label><button class="button" type="submit">Lưu mật khẩu mới</button></form></section>
