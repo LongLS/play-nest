@@ -35,7 +35,19 @@
       </form>
     </section>
 
-    <section id="change-password-screen" class="auth-card" hidden><div><span class="eyebrow">BẢO MẬT TÀI KHOẢN</span><h1>Đổi mật khẩu</h1><p>Bạn đã đăng nhập thành công bằng mật khẩu tạm. Bây giờ hãy đặt mật khẩu riêng trước khi xem thông tin thành viên.</p></div><form id="change-password-form" class="stack"><label><span>Mật khẩu mới</span><input id="new-password" type="password" autocomplete="new-password" minlength="8" required></label><label><span>Nhập lại mật khẩu</span><input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required></label><button class="button" type="submit">Lưu mật khẩu mới</button></form></section>
+    <section id="change-password-screen" class="auth-card club-login-card club-password-card" hidden>
+      <form id="change-password-form" class="club-login-form">
+        <div class="club-login-main">
+          <img class="club-login-wordmark" src="../assets/img/figma/club/club-wordmark.webp" alt="PlayNest Club">
+          <div class="club-password-copy"><span>BẢO MẬT TÀI KHOẢN</span><h1>Đổi mật khẩu</h1><p>Bạn đang đăng nhập bằng mật khẩu tạm. Hãy tạo mật khẩu riêng để tiếp tục.</p></div>
+          <div class="club-login-fields">
+            <label><span>Mật khẩu mới</span><input id="new-password" type="password" autocomplete="new-password" minlength="8" placeholder="Ít nhất 8 ký tự" required></label>
+            <label><span>Nhập lại mật khẩu mới</span><input id="confirm-password" type="password" autocomplete="new-password" minlength="8" placeholder="Nhập lại mật khẩu" required></label>
+          </div>
+        </div>
+        <button class="button club-login-submit" type="submit">Lưu mật khẩu mới</button>
+      </form>
+    </section>
 
     <section id="club-screen" hidden>
       <div class="club-greeting"><span class="club-avatar"><img src="../assets/img/figma/club/user.svg" alt=""></span><div><span>PlayNest Xin chào!</span><strong id="member-name"></strong><small id="club-realtime-status" class="club-realtime-status" role="status">Đang kết nối dữ liệu…</small></div></div>
