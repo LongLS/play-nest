@@ -16,7 +16,12 @@
   <main class="club-shell">
     <p id="club-notice" class="notice" role="status" aria-live="polite" hidden></p>
 
-    <section id="auth-screen" class="auth-card">
+    <section id="club-loading" class="club-loading" role="status" aria-live="polite">
+      <span class="club-loading__spinner" aria-hidden="true"></span>
+      <strong>Đang tải PlayNest Club</strong>
+    </section>
+
+    <section id="auth-screen" class="auth-card" hidden>
       <div><span class="eyebrow">PLAYNEST CLUB</span><h1>Điểm vui chơi,<br>quà thật chất.</h1><p>Đăng nhập bằng số điện thoại và mật khẩu được PlayNest cấp.</p></div>
       <form id="login-form" class="stack"><label><span>Số điện thoại</span><input id="phone" type="tel" inputmode="tel" autocomplete="username" placeholder="09xxxxxxxx" required></label><label><span>Mật khẩu</span><input id="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="button" type="submit">Đăng nhập</button><small>Quên mật khẩu? Hãy yêu cầu nhân viên PlayNest cấp mật khẩu tạm mới sau khi xác minh tại quầy.</small></form>
     </section>

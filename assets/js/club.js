@@ -6,7 +6,8 @@
   function normalizePhone(value){const digits=value.replace(/\D/g,"");if(/^0\d{9}$/.test(digits))return "+84"+digits.slice(1);if(/^84\d{9}$/.test(digits))return "+"+digits;if(/^\+84\d{9}$/.test(value.replace(/\s/g,"")))return value.replace(/\s/g,"");throw new Error("Số điện thoại Việt Nam chưa đúng định dạng.");}
   async function rpc(name,args){const result=await client.rpc(name,args||{});if(result.error)throw result.error;return result.data;}
   function memberEmail(value){return normalizePhone(value).replace(/\D/g,"")+"@member.playnest.vn";}
-  async function openClub(){profile=await rpc("customer_club_profile");if(!profile){await client.auth.signOut();throw new Error("Tài khoản chưa được liên kết với thành viên PlayNest");}byId("auth-screen").hidden=true;byId("club-logout").hidden=false;if(profile.must_change_password){byId("change-password-screen").hidden=false;byId("club-screen").hidden=true;return;}byId("change-password-screen").hidden=true;byId("club-screen").hidden=false;render();startRealtime();}
+  function finishInitialLoading(showLogin){byId("club-loading").hidden=true;byId("auth-screen").hidden=!showLogin;}
+  async function openClub(){profile=await rpc("customer_club_profile");if(!profile){await client.auth.signOut();throw new Error("Tài khoản chưa được liên kết với thành viên PlayNest");}finishInitialLoading(false);byId("club-logout").hidden=false;if(profile.must_change_password){byId("change-password-screen").hidden=false;byId("club-screen").hidden=true;return;}byId("change-password-screen").hidden=true;byId("club-screen").hidden=false;render();startRealtime();}
   function formatDate(value){return value?new Intl.DateTimeFormat("vi-VN",{dateStyle:"short",timeStyle:"short"}).format(new Date(value)):"—";}
   function rewardKind(reward){const name=(reward.name||"").toLowerCase();if(name.includes("snack"))return"snack";if(name.includes("nước")||name.includes("lon"))return"drink";if(name.includes("50"))return"voucher-50";if(name.includes("20"))return"voucher-20";return"default";}
   function rewardImage(reward){const kind=rewardKind(reward);return kind==="default"?(reward.image_url||"../assets/img/figma/club/club-crown.webp"):"../assets/img/figma/club/"+kind+".webp";}
@@ -43,5 +44,5 @@
   window.addEventListener("offline",()=>realtimeStatus("Đang ngoại tuyến","error"));
   document.addEventListener("visibilitychange",()=>{if(!document.hidden&&profile)refresh().catch(()=>{});});
   byId("club-logout").addEventListener("click",async()=>{if(realtimeChannel)await client.removeChannel(realtimeChannel);await client.auth.signOut();location.reload();});
-  client.auth.getSession().then(({data})=>{if(data.session)openClub().catch(e=>notice(e.message,"error"));});
+  client.auth.getSession().then(async({data,error})=>{if(error)throw error;if(data.session)await openClub();else finishInitialLoading(true);}).catch(error=>{finishInitialLoading(true);notice(error.message,"error");});
 })();
