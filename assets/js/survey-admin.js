@@ -12,6 +12,7 @@
   }
 
   const client = library.createClient(config.url, config.publishableKey);
+  let temporaryLoginPassword = "";
   let responses = [];
   let surveyPage = 1;
   let surveyTotal = 0;
@@ -295,13 +296,15 @@
       let email;
       try { email = staffLoginEmail(element("admin-email").value); }
       catch (error) { setLoading(button, false); showNotice(error.message, "error"); return; }
-      const result = await client.auth.signInWithPassword({ email: email, password: element("admin-password").value });
+      const loginPassword=element("admin-password").value;
+      const result = await client.auth.signInWithPassword({ email: email, password: loginPassword });
 
       setLoading(button, false);
       if (result.error) {
         showNotice("Đăng nhập không thành công. Kiểm tra lại tên đăng nhập và mật khẩu.", "error");
         return;
       }
+      temporaryLoginPassword=loginPassword;
       await showDashboard(result.data.session);
     });
 
@@ -309,14 +312,15 @@
       event.preventDefault();
       const password=element("staff-new-password").value,confirmation=element("staff-confirm-password").value;
       if(password.length<8){showNotice("Mật khẩu mới phải có ít nhất 8 ký tự.","error");return;}
+      if(temporaryLoginPassword&&password===temporaryLoginPassword){showNotice("Mật khẩu mới không được trùng với mật khẩu tạm. Hãy chọn một mật khẩu khác.","error");return;}
       if(password!==confirmation){showNotice("Hai lần nhập mật khẩu mới chưa khớp.","error");return;}
       const button=event.currentTarget.querySelector('[type="submit"]');setLoading(button,true,"Đang đổi...");showNotice("","");
       const updateResult=await client.auth.updateUser({password:password});
-      if(updateResult.error){setLoading(button,false);showNotice("Không thể đổi mật khẩu: "+updateResult.error.message,"error");return;}
+      if(updateResult.error){setLoading(button,false);const samePassword=/different from the old password/i.test(updateResult.error.message||"");showNotice(samePassword?"Mật khẩu mới không được trùng với mật khẩu tạm. Hãy chọn một mật khẩu khác.":"Không thể đổi mật khẩu: "+updateResult.error.message,"error");return;}
       const changed=await client.rpc("staff_password_changed");
       setLoading(button,false);
       if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
-      event.currentTarget.reset();showNotice("Đã đổi mật khẩu thành công.","success");
+      temporaryLoginPassword="";event.currentTarget.reset();showNotice("Đã đổi mật khẩu thành công.","success");
       const current=await client.auth.getSession();if(current.data.session)await showDashboard(current.data.session);
     });
 
