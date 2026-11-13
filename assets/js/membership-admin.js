@@ -19,7 +19,7 @@
     member_lookup:"Tra cứu thông tin thành viên",member_created:"Tạo thành viên mới",member_updated:"Cập nhật trạng thái thành viên",member_phone_changed:"Thay đổi số điện thoại thành viên",member_anonymized:"Xóa thông tin nhận diện của thành viên",phone_verified:"Xác minh số điện thoại",
     earn_submitted:"Gửi yêu cầu tích điểm",earn_approved:"Duyệt yêu cầu tích điểm",earn_rejected:"Từ chối yêu cầu tích điểm",earn_cancelled:"Hủy yêu cầu tích điểm",earn_reversed:"Thu hồi số điểm đã cộng",points_adjusted:"Điều chỉnh điểm thành viên",points_expired:"Ghi nhận điểm hết hạn",
     reward_saved:"Thêm hoặc cập nhật phần thưởng",reward_deleted:"Xóa phần thưởng",reward_disabled:"Ngừng sử dụng phần thưởng",reward_redeemed:"Đổi phần thưởng cho khách",customer_reward_redeemed:"Khách xác nhận đổi phần thưởng",redemption_fulfilled:"Xác nhận đã giao quà",redemption_cancelled:"Hủy lượt đổi quà và hoàn điểm",redemption_expired:"Mã nhận quà đã hết hạn",
-    settings_updated:"Cập nhật cấu hình chương trình",staff_access_saved:"Cập nhật tài khoản và quyền nhân viên",staff_account_deleted:"Xóa tài khoản nhân viên",survey_updated:"Cập nhật trạng thái khảo sát",survey_archived:"Lưu trữ khảo sát",
+    settings_updated:"Cập nhật cấu hình chương trình",staff_access_saved:"Cập nhật tài khoản và quyền nhân viên",staff_account_deleted:"Xóa tài khoản nhân viên",staff_password_changed:"Nhân viên đổi mật khẩu tạm",survey_updated:"Cập nhật trạng thái khảo sát",survey_archived:"Lưu trữ khảo sát",
     customer_identity_linked:"Liên kết tài khoản PlayNest Club",customer_account_updated:"Khách cập nhật tài khoản",customer_password_changed:"Khách thay đổi mật khẩu",customer_data_request:"Khách gửi yêu cầu về dữ liệu cá nhân"
   };
   const activityFields = {points:"Số điểm",points_refunded:"Điểm đã hoàn",balance_after:"Điểm còn lại",delta:"Mức điều chỉnh",reason:"Lý do",status:"Trạng thái",method:"Cách xác minh",note:"Ghi chú",role:"Vai trò",active:"Tài khoản hoạt động",program:"Chương trình",reward:"Phần thưởng",member:"Thành viên",booking_code:"Mã booking",applied_program:"Chương trình áp dụng",valid_until:"Có hiệu lực đến",expiry_months:"Hạn điểm (tháng)",spend_per_point:"Số tiền cho 1 điểm",self_approved:"Người gửi tự duyệt"};
@@ -71,7 +71,7 @@
     const sessionResult=await client.auth.getSession(),token=sessionResult.data.session&&sessionResult.data.session.access_token;if(!token)throw new Error("Phiên đăng nhập đã hết hạn");
     const response=await fetch(window.playnestSupabaseConfig.url+"/functions/v1/manage-staff-auth",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token,"apikey":window.playnestSupabaseConfig.publishableKey},body:JSON.stringify({username:byId("staff-email").value,display_name:byId("staff-name").value,role:byId("staff-role").value,active:byId("staff-active").checked,can_redeem:byId("staff-redeem").checked,reset_password:byId("staff-reset-password").checked})});
     const data=await response.json();if(!response.ok)throw new Error(data.error||"Không thể quản lý tài khoản nhân viên");
-    if(data.temporary_password){byId("member-temporary-password").textContent=data.temporary_password;byId("member-password-dialog").showModal();}
+    if(data.temporary_password){byId("staff-temporary-password").textContent=data.temporary_password;byId("staff-password-dialog").showModal();}
     return data;
   }
 

@@ -132,7 +132,7 @@
   }
 
   async function verifyAdmin(user) {
-    const membership = await client.from("program_users").select("user_id, display_name, role, can_redeem").eq("user_id", user.id).eq("active", true).maybeSingle();
+    const membership = await client.from("program_users").select("user_id, display_name, role, can_redeem, must_change_password").eq("user_id", user.id).eq("active", true).maybeSingle();
     if (!membership.error && membership.data) return membership.data;
     const legacy = await client.from("admin_users").select("user_id").eq("user_id", user.id).maybeSingle();
     if (legacy.error) throw legacy.error;
@@ -168,7 +168,13 @@
         return;
       }
 
+      if (profile.must_change_password) {
+        showPasswordChange();
+        return;
+      }
+
       element("admin-login-section").hidden = true;
+      element("staff-password-section").hidden = true;
       element("admin-dashboard").hidden = false;
       element("admin-logout").hidden = false;
       window.playnestAdmin = { client: client, session: session, profile: profile };
@@ -182,8 +188,17 @@
 
   function showLogin() {
     element("admin-login-section").hidden = false;
+    element("staff-password-section").hidden = true;
     element("admin-dashboard").hidden = true;
     element("admin-logout").hidden = true;
+  }
+
+  function showPasswordChange() {
+    element("admin-login-section").hidden = true;
+    element("staff-password-section").hidden = false;
+    element("admin-dashboard").hidden = true;
+    element("admin-logout").hidden = false;
+    element("staff-new-password").focus();
   }
 
   function csvEscape(value) {
@@ -288,6 +303,21 @@
         return;
       }
       await showDashboard(result.data.session);
+    });
+
+    element("staff-password-form").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const password=element("staff-new-password").value,confirmation=element("staff-confirm-password").value;
+      if(password.length<8){showNotice("Mật khẩu mới phải có ít nhất 8 ký tự.","error");return;}
+      if(password!==confirmation){showNotice("Hai lần nhập mật khẩu mới chưa khớp.","error");return;}
+      const button=event.currentTarget.querySelector('[type="submit"]');setLoading(button,true,"Đang đổi...");showNotice("","");
+      const updateResult=await client.auth.updateUser({password:password});
+      if(updateResult.error){setLoading(button,false);showNotice("Không thể đổi mật khẩu: "+updateResult.error.message,"error");return;}
+      const changed=await client.rpc("staff_password_changed");
+      setLoading(button,false);
+      if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
+      event.currentTarget.reset();showNotice("Đã đổi mật khẩu thành công.","success");
+      const current=await client.auth.getSession();if(current.data.session)await showDashboard(current.data.session);
     });
 
     element("admin-logout").addEventListener("click", async function () {

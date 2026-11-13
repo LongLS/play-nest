@@ -47,6 +47,19 @@
             </form>
         </section>
 
+        <section class="admin-login" id="staff-password-section" hidden>
+            <div class="admin-login__intro">
+                <span>Bảo mật tài khoản</span>
+                <h2>Tạo mật khẩu mới</h2>
+                <p>Bạn đang đăng nhập bằng mật khẩu tạm. Hãy tạo mật khẩu riêng trước khi sử dụng hệ thống nội bộ.</p>
+            </div>
+            <form id="staff-password-form">
+                <label><span>Mật khẩu mới</span><input type="password" id="staff-new-password" autocomplete="new-password" minlength="8" required placeholder="Ít nhất 8 ký tự"></label>
+                <label><span>Nhập lại mật khẩu mới</span><input type="password" id="staff-confirm-password" autocomplete="new-password" minlength="8" required placeholder="Nhập lại mật khẩu"></label>
+                <button class="admin-button" type="submit">Đổi mật khẩu và tiếp tục</button>
+            </form>
+        </section>
+
         <section class="admin-dashboard" id="admin-dashboard" hidden>
             <nav class="ops-nav" aria-label="Chức năng quản trị">
                 <button class="is-active" data-panel="membership-overview"><img class="ui-icon" src="../assets/img/admin-icons/dashboard-line.svg" alt="" aria-hidden="true"><span>Tổng quan</span></button>
@@ -143,6 +156,7 @@
     <dialog class="admin-dialog" id="member-detail-dialog"><form method="dialog" class="dialog-shell"><div class="dialog-header"><div><span class="admin-eyebrow">Hồ sơ thành viên</span><h2 id="member-detail-title">Chi tiết</h2></div><button class="dialog-close" value="cancel" aria-label="Đóng">×</button></div><div id="member-detail-content"></div></form></dialog>
     <dialog class="admin-dialog" id="survey-detail-dialog"><form method="dialog" class="dialog-shell"><div class="dialog-header"><div><span class="admin-eyebrow">Phản hồi khách hàng</span><h2 id="survey-detail-title">Chi tiết khảo sát</h2></div><button class="dialog-close" value="cancel" aria-label="Đóng">×</button></div><div id="survey-detail-content"></div></form></dialog>
     <dialog class="admin-dialog" id="member-password-dialog"><form method="dialog" class="dialog-shell"><div class="dialog-header"><div><span class="admin-eyebrow">CHỈ HIỂN THỊ MỘT LẦN</span><h2>Mật khẩu tạm của khách</h2></div><button class="dialog-close" value="cancel" aria-label="Đóng">×</button></div><p>Mật khẩu có dạng <strong>playnest + 4 số</strong> để khách dễ nhập trên điện thoại. Giao trực tiếp cho khách; hệ thống sẽ bắt buộc đổi mật khẩu sau lần đăng nhập đầu tiên.</p><div class="temporary-password" id="member-temporary-password"></div><button class="admin-button" value="close">Đã giao cho khách</button></form></dialog>
+    <dialog class="admin-dialog" id="staff-password-dialog"><form method="dialog" class="dialog-shell"><div class="dialog-header"><div><span class="admin-eyebrow">CHỈ HIỂN THỊ MỘT LẦN</span><h2>Mật khẩu tạm của nhân viên</h2></div><button class="dialog-close" value="cancel" aria-label="Đóng">×</button></div><p>Giao trực tiếp mật khẩu này cho đúng nhân viên. Sau khi đăng nhập, nhân viên sẽ phải tạo mật khẩu mới trước khi sử dụng hệ thống.</p><div class="temporary-password" id="staff-temporary-password"></div><button class="admin-button" value="close">Đã giao cho nhân viên</button></form></dialog>
     <dialog class="admin-dialog earn-dialog" id="earn-dialog">
         <div class="dialog-shell">
             <div class="dialog-header"><div><span class="admin-eyebrow">Gửi Admin duyệt</span><h2>Tích điểm cho khách</h2></div><button class="dialog-close" id="earn-dialog-close" type="button" aria-label="Đóng"><img class="ui-icon" src="../assets/img/admin-icons/close-line.svg" alt="" aria-hidden="true"></button></div>

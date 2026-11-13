@@ -46,6 +46,7 @@ Deno.serve(async(req)=>{
     if(account.id===user.id&&(!body.active||body.role!=="manager"))return json({error:"Không thể tự khóa hoặc hạ quyền Admin đang đăng nhập"},400);
     const {error:upsertError}=await admin.from("program_users").upsert({user_id:account.id,email,display_name:String(body.display_name||username).trim(),role:body.role,active:Boolean(body.active),can_redeem:Boolean(body.can_redeem),updated_at:new Date().toISOString()},{onConflict:"user_id"});
     if(upsertError)throw upsertError;
+    if(created||body.reset_password){const {error:passwordFlagError}=await admin.from("program_users").update({must_change_password:true,updated_at:new Date().toISOString()}).eq("user_id",account.id);if(passwordFlagError)throw passwordFlagError;}
     await admin.from("membership_audit_log").insert({actor_id:user.id,action:created?"staff_account_created":"staff_access_saved",entity_type:"program_user",entity_id:account.id,details:{username,role:body.role,active:Boolean(body.active),password_reset:Boolean(body.reset_password)}});
     return json({created,username,temporary_password});
   }catch(error){return json({error:error instanceof Error?error.message:"Không thể quản lý tài khoản nhân viên"},400);}
