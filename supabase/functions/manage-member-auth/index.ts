@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const cors={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, x-client-info, apikey, content-type"};
 const json=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers:{...cors,"Content-Type":"application/json"}});
-const temporaryPassword=()=>{const chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";const bytes=crypto.getRandomValues(new Uint8Array(10));return Array.from(bytes,b=>chars[b%chars.length]).join("");};
+const temporaryPassword=()=>{const value=crypto.getRandomValues(new Uint32Array(1))[0]%10000;return `playnest${String(value).padStart(4,"0")}`;};
 const alias=(phone:string)=>phone.replace(/\D/g,"").replace(/^0/,"84")+"@member.playnest.vn";
 
 Deno.serve(async(req)=>{
