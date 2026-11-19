@@ -11033,6 +11033,109 @@ span {
 .playnest-mobile-hero {
   display: none;
 }
+
+.playnest-gta-feature {
+  padding: 42px 0 8px;
+  background: #070a0d;
+}
+
+.playnest-gta-feature__card {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(255, 143, 42, 0.35);
+  border-radius: 24px;
+  background: linear-gradient(130deg, rgba(255, 96, 0, 0.2), rgba(15, 20, 26, 0.98) 52%);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.playnest-gta-feature__image {
+  min-height: 360px;
+  background: #111;
+}
+
+.playnest-gta-feature__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playnest-gta-feature__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(30px, 5vw, 68px);
+}
+
+.playnest-gta-feature__eyebrow {
+  margin-bottom: 14px;
+  color: #ff6b18;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.playnest-gta-feature__content h2 {
+  max-width: 720px;
+  margin-bottom: 18px;
+  color: #fff;
+  font-size: clamp(32px, 4vw, 58px);
+  line-height: 1.04;
+}
+
+.playnest-gta-feature__content p {
+  max-width: 680px;
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.playnest-gta-feature__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 767px) {
+  .playnest-gta-feature {
+    padding: 24px 0 0;
+  }
+
+  .playnest-gta-feature__card {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .playnest-gta-feature__image {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .playnest-gta-feature__content {
+    padding: 24px 20px 28px;
+  }
+
+  .playnest-gta-feature__content h2 {
+    font-size: 30px;
+  }
+
+  .playnest-gta-feature__content p {
+    margin-bottom: 22px;
+    font-size: 16px;
+  }
+
+  .playnest-gta-feature__actions,
+  .playnest-gta-feature__actions .gt-theme-btn {
+    width: 100%;
+  }
+
+  .playnest-gta-feature__actions .gt-theme-btn {
+    justify-content: center;
+    text-align: center;
+  }
+}
 @media (max-width: 767px) {
   .playnest-home > .header-2.header-7 {
     display: none;
@@ -11103,7 +11206,7 @@ span {
     overflow: hidden;
     color: #fff;
     background-color: #3b0c01;
-    background-image: url("../img/figma/mobile-hero/background.png");
+    background-image: url("../img/figma/mobile-hero/background.webp");
     background-repeat: no-repeat;
     background-position: center top;
     background-size: auto max(641px, 100%);
@@ -18426,6 +18529,15 @@ body.game-modal-open {
 .playnest-article-content ul { margin: 24px 0; padding-left: 24px; }
 .playnest-article-content li { margin-bottom: 9px; }
 .playnest-article-lead { padding-left: 22px; border-left: 4px solid #F95E00; color: #fff !important; font-size: 22px !important; }
+.playnest-search-summary { margin: 38px 0; padding: 30px; border: 1px solid rgba(249,94,0,.55); border-radius: 18px; background: linear-gradient(145deg,rgba(249,94,0,.16),#10151b 58%); }
+.playnest-search-summary h2 { margin: 4px 0 22px; font-size: clamp(27px,4vw,38px); }
+.playnest-search-summary__label { margin: 0 !important; color: #F95E00 !important; font-size: 14px !important; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.playnest-search-summary dl { margin: 0; }
+.playnest-search-summary dl > div { display: grid; grid-template-columns: 135px minmax(0,1fr); gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.1); }
+.playnest-search-summary dt { color: #fff; font-weight: 800; }
+.playnest-search-summary dd { margin: 0; color: #c4c7cc; line-height: 1.55; }
+.playnest-search-summary__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.playnest-search-summary__actions a { color: #fff; text-decoration: none; }
 .playnest-article-content figure { margin: 38px 0; }
 .playnest-article-content figure img { width: 100%; max-height: 620px; object-fit: cover; border: 1px solid rgba(249,94,0,.45); }
 .playnest-article-content figcaption { margin-top: 10px; color: #92979e; font-size: 14px; }
@@ -18448,6 +18560,9 @@ body.game-modal-open {
   .playnest-article-hero h1 { font-size: 39px; }
   .playnest-article-content { padding-bottom: 75px; }
   .playnest-article-content p,.playnest-article-content li { font-size: 17px; }
+  .playnest-search-summary { padding: 24px 20px; }
+  .playnest-search-summary dl > div { grid-template-columns: 1fr; gap: 4px; }
+  .playnest-search-summary__actions { display: grid; }
   .playnest-article-callout { padding: 25px 20px; }
   .playnest-article-callout > div { display: grid; }
   .playnest-article-author { align-items: flex-start; flex-direction: column; }
