@@ -33,6 +33,7 @@ window.ps5Games = [
   { name: "DEAD OR ALIVE 5", players: "1-4 người", genres: ["Đối kháng", "Hành động"] },
   { name: "Gigantosaurus", players: "1-4 người", genres: ["Thể thao", "Tiệc tùng"] },
   { name: "GTA5", players: "1 người", genres: ["Phiêu lưu", "Hành động"] },
+  { name: "Grand Theft Auto VI", players: "1 người", genres: ["Hành động", "Phiêu lưu", "Thế giới mở"] },
   { name: "Jumanji", players: "1-4 người", genres: ["Phiêu lưu", "Hành động"] },
   { name: "Monopoly Madness", players: "1-4 người", genres: ["Party", "Gia đình"] },
   { name: "Monster Jam Showdown", players: "1-2 người", genres: ["Thể thao", "Đua xe"] },
