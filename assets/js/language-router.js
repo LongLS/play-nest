@@ -16,7 +16,6 @@
     'Game Box Hà Nội | PS5 & Nintendo phòng riêng – PlayNest':'Private Gaming Lounge in Hanoi | PlayNest',
     'PlayNest là không gian gaming riêng tư dành cho cặp đôi và hội bạn với PS5, Nintendo và Netflix.':'PlayNest is a private gaming lounge for couples and groups, with PS5, Nintendo Switch and Netflix.',
     'Liên hệ PlayNest':'Contact PlayNest','Danh sách game':'Games','Bài viết':'Blog','Khảo sát khách hàng':'Customer survey','Thông tin liên hệ':'Contact','Đặt phòng ngay':'Book a room','Đăng nhập':'Sign in',
-    'PlayNest Game Box Hà Nội':'PlayNest Private Gaming Lounge Hanoi','PS5 - Nintendo - Netflix':'PS5 · Nintendo · Netflix',
     'Phòng game riêng tư cho cặp đôi, gia đình':'Private gaming rooms for couples, families','và hội bạn tại 146 Trần Bình.':'and groups at 146 Tran Binh Street.',
     'Liên hệ đặt phòng':'Book a room','Liên hệ Zalo':'Message on Zalo','Private Gaming Lounge Hà Nội':'Private Gaming Lounge Hanoi',
     'Phòng game riêng tư cho cặp đôi, gia đình và hội bạn tại 146 Trần Bình.':'Private gaming rooms for couples, families and groups at 146 Tran Binh Street.','Xem thêm':'Learn more',
