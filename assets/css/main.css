@@ -939,6 +939,23 @@ span {
   margin: 0px;
 }
 
+.playnest-language-switcher {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 99999;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, .32);
+  border-radius: 50%;
+  color: #fff;
+  background: #f95e00;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  font: 800 14px/1 Inter, Arial, sans-serif;
+}
+
+.playnest-language-switcher:hover { background: #ff7a2b; }
+
 .about-wrapper {
   margin-top: 75px;
   position: relative;
