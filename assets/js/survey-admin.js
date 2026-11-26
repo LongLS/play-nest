@@ -327,11 +327,12 @@
           return;
         }
       }
+      showNotice("Mật khẩu đã được cập nhật. Hệ thống đang hoàn tất và đăng xuất...","success");
       const changed=await client.rpc("staff_password_changed");
       setLoading(button,false);
       if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
       temporaryLoginPassword="";event.currentTarget.reset();
-      const signedOut=await client.auth.signOut();
+      const signedOut=await client.auth.signOut({scope:"local"});
       if(signedOut.error){
         showNotice("Đã đổi mật khẩu nhưng chưa thể đăng xuất tự động. Hãy bấm Đăng xuất rồi đăng nhập lại bằng mật khẩu mới.","error");
         return;
