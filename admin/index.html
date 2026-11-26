@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap&amp;subset=vietnamese" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/survey-admin.css">
+    <link rel="stylesheet" href="../assets/css/survey-admin.css?v=20261126-member-suggestions">
 </head>
 <body>
     <header class="admin-header">
@@ -87,7 +87,7 @@
             <section class="ops-panel" id="member-lookup">
                 <div class="panel-heading"><div><span class="admin-eyebrow">Tra cứu chính xác</span><h2>Thành viên</h2></div></div>
                 <p class="ops-hint"><strong>Cách tạo tài khoản khách:</strong> tra cứu SĐT và tạo thành viên. Hệ thống sẽ hiển thị mật khẩu tạm một lần để giao trực tiếp cho khách. Khách đăng nhập <a href="../club/" target="_blank" rel="noopener">PlayNest Club</a> bằng SĐT và mật khẩu tạm, sau đó bắt buộc đặt mật khẩu riêng.</p>
-                <form class="ops-form ops-form--inline" id="member-lookup-form"><label><span>Số điện thoại đầy đủ</span><input id="member-phone" type="tel" required autocomplete="off" inputmode="tel" placeholder="09xxxxxxxx"></label><button class="admin-button" type="submit"><img class="ui-icon" src="../assets/img/admin-icons/search-line.svg" alt="" aria-hidden="true">Tra cứu</button></form>
+                <form class="ops-form ops-form--inline" id="member-lookup-form"><label class="member-search-field"><span>Số điện thoại</span><div class="member-search-control"><input id="member-phone" type="tel" required autocomplete="off" inputmode="tel" placeholder="Nhập ít nhất 3 số..." aria-autocomplete="list" aria-controls="member-phone-suggestions" aria-expanded="false"><div class="member-suggestions" id="member-phone-suggestions" role="listbox" aria-label="Gợi ý thành viên" hidden></div></div></label><button class="admin-button" type="submit"><img class="ui-icon" src="../assets/img/admin-icons/search-line.svg" alt="" aria-hidden="true">Tra cứu</button></form>
                 <p class="ops-inline-status" id="member-lookup-status" role="status" aria-live="polite" hidden></p>
                 <div class="member-card" id="member-result" hidden></div>
                 <section class="member-auth-box" id="member-auth-box" data-manager-only hidden><div><span class="admin-eyebrow">TÀI KHOẢN ĐĂNG NHẬP KHÁCH</span><h3>Quản lý mật khẩu</h3><p>Chỉ dùng khi khách quên mật khẩu và đã được xác minh trực tiếp. Mật khẩu hiện tại sẽ mất hiệu lực ngay.</p></div><button class="admin-button" id="member-reset-password" type="button">Cấp lại mật khẩu tạm</button></section>
@@ -172,6 +172,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../assets/js/supabase-config.js"></script>
     <script src="../assets/js/survey-admin.js?v=20261126-password-flow-6"></script>
-    <script src="../assets/js/membership-admin.js?v=earn-approval-fix"></script>
+    <script src="../assets/js/membership-admin.js?v=20261126-member-suggestions"></script>
 </body>
 </html>

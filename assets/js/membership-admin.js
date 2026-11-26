@@ -5,6 +5,8 @@
   let currentMember;
   let currentSettings;
   let rewardPreviewUrl;
+  let memberSuggestionTimer;
+  let memberSuggestionRequest=0;
   const pages = { members: 1, earns: 1, redemptions: 1, activity: 1 };
   const pageSize = 15;
   const maxEarnAmount = 99999999;
@@ -158,6 +160,42 @@
     return member;
   }
 
+  function hideMemberSuggestions(){
+    const box=byId("member-phone-suggestions"),input=byId("member-phone");
+    if(!box||!input)return;
+    box.hidden=true;box.replaceChildren();input.setAttribute("aria-expanded","false");
+  }
+
+  function renderMemberSuggestions(rows){
+    const box=byId("member-phone-suggestions"),input=byId("member-phone");
+    box.replaceChildren();
+    (rows||[]).forEach(function(member){
+      const option=document.createElement("button"),identity=document.createElement("span"),name=document.createElement("strong"),phone=document.createElement("small"),code=document.createElement("span");
+      option.type="button";option.className="member-suggestion";option.setAttribute("role","option");
+      name.textContent=member.display_name||"Khách PlayNest";phone.textContent=member.phone;code.textContent=member.member_code;
+      identity.append(name,phone);option.append(identity,code);
+      option.addEventListener("mousedown",function(event){event.preventDefault();});
+      option.addEventListener("click",async function(){
+        input.value=member.phone;hideMemberSuggestions();
+        try{await lookup(member.phone);}catch(error){lookupStatus(error.message,"error");}
+      });
+      box.appendChild(option);
+    });
+    box.hidden=!rows||!rows.length;input.setAttribute("aria-expanded",String(Boolean(rows&&rows.length)));
+  }
+
+  async function suggestMembers(value){
+    const digits=String(value||"").replace(/[^0-9]/g,"");
+    if(digits.length<3){hideMemberSuggestions();return;}
+    const request=++memberSuggestionRequest;
+    try{
+      const rows=await rpc("search_members_by_phone",{p_query:value,p_limit:6});
+      if(request===memberSuggestionRequest&&byId("member-phone").value===value)renderMemberSuggestions(rows);
+    }catch(error){
+      if(request===memberSuggestionRequest)hideMemberSuggestions();
+    }
+  }
+
   async function loadDashboard() {
     if (profile.role !== "manager") return;
     const dates=overviewDates();const data = await rpc("membership_dashboard", { p_from: dates.from.toISOString(), p_to: dates.to.toISOString() });
@@ -283,6 +321,10 @@
     byId("earn-change-member").addEventListener("click",function(){byId("earn-dialog").close();showPanel("member-lookup");byId("member-phone").focus();});
     byId("earn-find-member").addEventListener("click",function(){showPanel("member-lookup");byId("member-phone").focus();});
     byId("member-reset-password").addEventListener("click",async function(){if(!currentMember)return notice("Hãy tra cứu thành viên trước.","error");try{await issueMemberPassword(currentMember,true);}catch(error){notice(error.message,"error");}});
+    byId("member-phone").addEventListener("input",function(event){clearTimeout(memberSuggestionTimer);memberSuggestionTimer=setTimeout(function(){suggestMembers(event.target.value);},250);});
+    byId("member-phone").addEventListener("focus",function(event){if(event.target.value.replace(/[^0-9]/g,"").length>=3)suggestMembers(event.target.value);});
+    byId("member-phone").addEventListener("blur",function(){setTimeout(hideMemberSuggestions,120);});
+    byId("member-phone").addEventListener("keydown",function(event){if(event.key==="Escape")hideMemberSuggestions();});
     byId("member-lookup-form").addEventListener("submit", async function (event) { event.preventDefault(); try { notice("", ""); await lookup(byId("member-phone").value); } catch (error) { lookupStatus(error.message, "error"); notice(error.message, "error"); } });
     byId("member-create-form").addEventListener("submit", async function (event) { event.preventDefault(); try { const rows = await rpc("create_member", { p_phone: byId("member-phone").value, p_name: byId("member-name").value, p_membership_consent: byId("member-consent").checked, p_marketing_consent: byId("marketing-consent").checked, p_policy_version: "2026-11" }); renderMember(rows[0]); byId("member-create-box").hidden = true; await issueMemberPassword(rows[0],false);notice("Đã tạo thành viên và tài khoản đăng nhập.", "success"); } catch (error) { notice(error.message, "error"); } });
     byId("earn-amount").addEventListener("input",function(event){const digits=event.target.value.replace(/[^0-9]/g,"");const amount=Number(digits)||0;event.target.value=digits?new Intl.NumberFormat("en-US").format(amount):"";event.target.setCustomValidity(amount>maxEarnAmount?"Số tiền tối đa được nhập là 99,999,999đ.":"");updateEarnPreview();});
