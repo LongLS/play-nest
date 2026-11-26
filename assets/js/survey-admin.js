@@ -334,26 +334,29 @@
         }
       }
       showNotice("Mật khẩu đã được cập nhật. Hệ thống đang hoàn tất và đăng xuất...","success");
-      const changed=await Promise.race([
-        client.rpc("staff_password_changed"),
-        new Promise(function(resolve){setTimeout(function(){resolve({data:null,error:null,timedOut:true});},4000);})
-      ]);
-      if(changed.error){
-        setLoading(button,false);
-        showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");
-        return;
-      }
       temporaryLoginPassword="";event.currentTarget.reset();
-      await Promise.race([
-        client.auth.signOut({scope:"local"}),
-        new Promise(function(resolve){setTimeout(resolve,1500);})
-      ]);
+      button.textContent="Đang đăng xuất...";
       const projectRef=new URL(config.url).hostname.split(".")[0];
       const storageKey="sb-"+projectRef+"-auth-token";
+      let accessToken="";
+      try{
+        const storedSession=JSON.parse(localStorage.getItem(storageKey)||"{}");
+        accessToken=storedSession.access_token||"";
+      }catch(ignore){}
+      if(accessToken){
+        try{
+          fetch(config.url+"/rest/v1/rpc/staff_password_changed",{
+            method:"POST",
+            headers:{apikey:config.publishableKey,Authorization:"Bearer "+accessToken,"Content-Type":"application/json"},
+            body:"{}",
+            keepalive:true
+          }).catch(function(){});
+        }catch(ignore){}
+      }
       localStorage.removeItem(storageKey);
       localStorage.removeItem(storageKey+"-code-verifier");
       sessionStorage.setItem("playnest-staff-password-notice","Đã đổi mật khẩu thành công. Hãy đăng nhập lại bằng mật khẩu mới.");
-      window.location.replace(window.location.pathname);
+      window.location.replace(window.location.pathname+"?password_changed="+Date.now());
     });
 
     element("admin-logout").addEventListener("click", async function () {
