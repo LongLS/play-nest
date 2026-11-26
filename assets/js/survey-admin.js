@@ -331,9 +331,15 @@
       setLoading(button,false);
       if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
       temporaryLoginPassword="";event.currentTarget.reset();
-      const current=await client.auth.getSession();
-      if(current.data.session)await showDashboard(current.data.session);
-      showNotice("Đã đổi mật khẩu thành công. Bạn có thể sử dụng hệ thống ngay bây giờ.","success");
+      const signedOut=await client.auth.signOut();
+      if(signedOut.error){
+        showNotice("Đã đổi mật khẩu nhưng chưa thể đăng xuất tự động. Hãy bấm Đăng xuất rồi đăng nhập lại bằng mật khẩu mới.","error");
+        return;
+      }
+      element("admin-password").value="";
+      showLogin();
+      showNotice("Đã đổi mật khẩu thành công. Hãy đăng nhập lại bằng mật khẩu mới.","success");
+      element("admin-password").focus();
     });
 
     element("admin-logout").addEventListener("click", async function () {
