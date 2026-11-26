@@ -316,12 +316,24 @@
       if(password!==confirmation){showNotice("Hai lần nhập mật khẩu mới chưa khớp.","error");return;}
       const button=event.currentTarget.querySelector('[type="submit"]');setLoading(button,true,"Đang đổi...");showNotice("","");
       const updateResult=await client.auth.updateUser({password:password});
-      if(updateResult.error){setLoading(button,false);const samePassword=/different from the old password/i.test(updateResult.error.message||"");showNotice(samePassword?"Mật khẩu mới không được trùng với mật khẩu tạm. Hãy chọn một mật khẩu khác.":"Không thể đổi mật khẩu: "+updateResult.error.message,"error");return;}
+      if(updateResult.error){
+        const samePassword=/different from the old password/i.test(updateResult.error.message||"");
+        // A previous submit may already have changed the Auth password while the
+        // database flag was not cleared. In that case finishing the flag update is
+        // safe because this value is known to differ from the temporary password.
+        if(!samePassword||!temporaryLoginPassword||password===temporaryLoginPassword){
+          setLoading(button,false);
+          showNotice(samePassword?"Mật khẩu mới không được trùng với mật khẩu tạm. Hãy chọn một mật khẩu khác.":"Không thể đổi mật khẩu: "+updateResult.error.message,"error");
+          return;
+        }
+      }
       const changed=await client.rpc("staff_password_changed");
       setLoading(button,false);
       if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
-      temporaryLoginPassword="";event.currentTarget.reset();showNotice("Đã đổi mật khẩu thành công.","success");
-      const current=await client.auth.getSession();if(current.data.session)await showDashboard(current.data.session);
+      temporaryLoginPassword="";event.currentTarget.reset();
+      const current=await client.auth.getSession();
+      if(current.data.session)await showDashboard(current.data.session);
+      showNotice("Đã đổi mật khẩu thành công. Bạn có thể sử dụng hệ thống ngay bây giờ.","success");
     });
 
     element("admin-logout").addEventListener("click", async function () {
