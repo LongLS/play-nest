@@ -285,6 +285,12 @@
       await showDashboard(sessionResult.data.session);
     } else {
       showLogin();
+      const passwordNotice=sessionStorage.getItem("playnest-staff-password-notice");
+      if(passwordNotice){
+        sessionStorage.removeItem("playnest-staff-password-notice");
+        showNotice(passwordNotice,"success");
+        element("admin-password").focus();
+      }
     }
 
     element("admin-login-form").addEventListener("submit", async function (event) {
@@ -328,19 +334,26 @@
         }
       }
       showNotice("Mật khẩu đã được cập nhật. Hệ thống đang hoàn tất và đăng xuất...","success");
-      const changed=await client.rpc("staff_password_changed");
-      setLoading(button,false);
-      if(changed.error){showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");return;}
-      temporaryLoginPassword="";event.currentTarget.reset();
-      const signedOut=await client.auth.signOut({scope:"local"});
-      if(signedOut.error){
-        showNotice("Đã đổi mật khẩu nhưng chưa thể đăng xuất tự động. Hãy bấm Đăng xuất rồi đăng nhập lại bằng mật khẩu mới.","error");
+      const changed=await Promise.race([
+        client.rpc("staff_password_changed"),
+        new Promise(function(resolve){setTimeout(function(){resolve({data:null,error:null,timedOut:true});},4000);})
+      ]);
+      if(changed.error){
+        setLoading(button,false);
+        showNotice("Mật khẩu đã đổi nhưng chưa thể hoàn tất xác nhận: "+changed.error.message,"error");
         return;
       }
-      element("admin-password").value="";
-      showLogin();
-      showNotice("Đã đổi mật khẩu thành công. Hãy đăng nhập lại bằng mật khẩu mới.","success");
-      element("admin-password").focus();
+      temporaryLoginPassword="";event.currentTarget.reset();
+      await Promise.race([
+        client.auth.signOut({scope:"local"}),
+        new Promise(function(resolve){setTimeout(resolve,1500);})
+      ]);
+      const projectRef=new URL(config.url).hostname.split(".")[0];
+      const storageKey="sb-"+projectRef+"-auth-token";
+      localStorage.removeItem(storageKey);
+      localStorage.removeItem(storageKey+"-code-verifier");
+      sessionStorage.setItem("playnest-staff-password-notice","Đã đổi mật khẩu thành công. Hãy đăng nhập lại bằng mật khẩu mới.");
+      window.location.replace(window.location.pathname);
     });
 
     element("admin-logout").addEventListener("click", async function () {
