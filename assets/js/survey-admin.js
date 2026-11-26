@@ -316,11 +316,12 @@
 
     element("staff-password-form").addEventListener("submit", async function (event) {
       event.preventDefault();
+      const form=event.currentTarget;
       const password=element("staff-new-password").value,confirmation=element("staff-confirm-password").value;
       if(password.length<8){showNotice("Mật khẩu mới phải có ít nhất 8 ký tự.","error");return;}
       if(temporaryLoginPassword&&password===temporaryLoginPassword){showNotice("Mật khẩu mới không được trùng với mật khẩu tạm. Hãy chọn một mật khẩu khác.","error");return;}
       if(password!==confirmation){showNotice("Hai lần nhập mật khẩu mới chưa khớp.","error");return;}
-      const button=event.currentTarget.querySelector('[type="submit"]');setLoading(button,true,"Đang đổi...");showNotice("","");
+      const button=form.querySelector('[type="submit"]');setLoading(button,true,"Đang đổi...");showNotice("","");
       const updateResult=await client.auth.updateUser({password:password});
       if(updateResult.error){
         const samePassword=/different from the old password/i.test(updateResult.error.message||"");
@@ -334,7 +335,7 @@
         }
       }
       showNotice("Mật khẩu đã được cập nhật. Hệ thống đang hoàn tất và đăng xuất...","success");
-      temporaryLoginPassword="";event.currentTarget.reset();
+      temporaryLoginPassword="";form.reset();
       button.textContent="Đang đăng xuất...";
       const projectRef=new URL(config.url).hostname.split(".")[0];
       const storageKey="sb-"+projectRef+"-auth-token";
