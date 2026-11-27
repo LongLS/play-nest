@@ -912,25 +912,35 @@
 
      //>> Gt-Testimonial-slider Slider Start <<//
     if ($('.gt-testimonial-slider').length > 0) {
-      const gtTestimonialSliders = new Swiper('.gt-testimonial-slider', {
-        spaceBetween: 30,
-        speed: 600,
-        loop: true,
-        effect: 'cards',
-        cardsEffect: {
-          perSlideOffset: 8,
-          perSlideRotate: 2,
-          slideShadows: false,
-        },
-        grabCursor: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        pagination: {
-          el: '.dot',
-          clickable: true,
-        },
+      const mobileReviews = window.matchMedia("(max-width: 767px)");
+      function createReviews(initialSlide = 0) {
+        return new Swiper('.gt-testimonial-slider', {
+          initialSlide,
+          spaceBetween: mobileReviews.matches ? 12 : 30,
+          speed: 600,
+          loop: true,
+          effect: mobileReviews.matches ? 'slide' : 'cards',
+          cardsEffect: {
+            perSlideOffset: 8,
+            perSlideRotate: 2,
+            slideShadows: false,
+          },
+          grabCursor: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.gt-testimonial-wrapper-3 .swiper-dot > .dot',
+            clickable: true,
+          },
+        });
+      }
+      let reviews = createReviews();
+      mobileReviews.addEventListener("change", () => {
+        const currentReview = reviews.realIndex;
+        reviews.destroy(true, true);
+        reviews = createReviews(currentReview);
       });
     }
 
@@ -1241,62 +1251,45 @@
     const sliderContainer = document.querySelector(".gt-game-case-slider");
     if (sliderContainer) {
         const slides = sliderContainer.querySelectorAll(".swiper-slide");
-        const progressLine = document.getElementById("progressLine");
-        const dots = document.querySelectorAll(".dots-container .dot");
+        const section = sliderContainer.closest(".gt-game-case-study-section");
+        const progressLine = section?.querySelector("#progressLine");
+        const dots = section?.querySelectorAll(".dots-container .dot");
 
-        if (!progressLine || dots.length === 0 || slides.length === 0) {
+        if (!progressLine || !dots?.length || slides.length === 0) {
             console.warn("Required elements for Swiper setup are missing (progress line or dots).");
             return;
         }
 
         const totalSlides = slides.length;
+        const mobileGames = window.matchMedia("(max-width: 767px)");
+
+        function updateGameProgress() {
+            progressLine.style.transitionDuration = this.params.speed + "ms";
+            progressLine.style.width = ((this.realIndex + 1) / totalSlides) * 100 + "%";
+            dots.forEach((dot, index) => {
+                const active = index === this.realIndex;
+                dot.classList.toggle("active", active);
+                if (active) dot.setAttribute("aria-current", "true");
+                else dot.removeAttribute("aria-current");
+            });
+        }
 
         const swiper = new Swiper(sliderContainer, {
-            speed: 1300,
+            speed: mobileGames.matches ? 400 : 1300,
             loop: true,
-            direction: "vertical",
-            mousewheel: true,
-            // autoplay: {
-            //   delay: 2000,
-            //   disableOnInteraction: false,
-            // },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            on: {
-                slideChangeTransitionStart: function() {
-                    const activeDotIndex = this.realIndex;
-                    const widthPercentage = ((activeDotIndex + 1) / totalSlides) * 100;
-
-                    progressLine.style.transition = `width ${this.params.speed}ms linear`;
-                    progressLine.style.width = `${widthPercentage}%`;
-
-                    dots.forEach(dot => dot.classList.remove("active"));
-
-                    if (dots[activeDotIndex]) {
-                        dots[activeDotIndex].classList.add("active");
-                    }
-                },
-
-                loopFix: function() {
-                    if (this.realIndex === 0 && this.previousRealIndex === totalSlides - 1) {
-                        progressLine.style.transition = "none";
-                        progressLine.style.width = "0%";
-
-                        setTimeout(() => {
-                            progressLine.style.transition = `width ${swiper.params.speed}ms linear`;
-                            progressLine.style.width = `${(1 / totalSlides) * 100}%`;
-                        }, 50); // 50ms delay
-                    }
-                },
-            },
+            direction: mobileGames.matches ? "horizontal" : "vertical",
+            mousewheel: !mobileGames.matches,
+            on: { init: updateGameProgress, realIndexChange: updateGameProgress },
         });
 
-        if (dots.length > 0) {
-            dots[0].classList.add("active");
-            progressLine.style.width = `${(1 / totalSlides) * 100}%`;
-        }
+        dots.forEach((dot, index) => dot.addEventListener("click", () => swiper.slideToLoop(index)));
+        mobileGames.addEventListener("change", (event) => {
+            swiper.params.speed = event.matches ? 400 : 1300;
+            swiper.params.mousewheel.enabled = !event.matches;
+            if (event.matches) swiper.mousewheel.disable();
+            else swiper.mousewheel.enable();
+            swiper.changeDirection(event.matches ? "horizontal" : "vertical");
+        });
     }
 });
 

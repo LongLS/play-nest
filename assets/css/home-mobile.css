@@ -1,0 +1,557 @@
+/* The mobile homepage continues the typography and warm palette of its hero. */
+.playnest-home > :is(.playnest-gta-feature, .about-section, .service-section-7,
+    .gt-game-case-study-section, .playnest-search-section, .gt-testimonial-section-3) {
+  padding-block: 36px;
+  color: var(--mobile-copy);
+  background-color: var(--mobile-base);
+  font-family: var(--mobile-font);
+  font-size: 16px;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.playnest-home > section:not(.playnest-mobile-hero) > .container,
+.playnest-home .service-wrapper-7 {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-inline: var(--mobile-gutter);
+}
+
+.playnest-home > :is(.playnest-gta-feature, .about-section, .gt-game-case-study-section,
+    .playnest-search-section, .gt-testimonial-section-3) h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(26px, 6.9vw, 34px);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.6px;
+  overflow-wrap: anywhere;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.playnest-home :is(.section-title, .section-title-2, .playnest-search-heading) {
+  margin: 0;
+  text-align: left;
+}
+
+.playnest-home :is(.section-title h6, .section-title-2 h6, .playnest-gta-feature__eyebrow,
+    .playnest-search-heading > span) {
+  display: block;
+  margin: 0 0 6px;
+  padding: 0;
+  color: var(--mobile-accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+
+.playnest-home :is(.section-title h6, .section-title-2 h6)::before,
+.playnest-home :is(.section-title h6, .section-title-2 h6)::after {
+  display: none;
+}
+
+.playnest-home :is(.playnest-gta-feature__card, .about-wrapper-7 .about-image-2,
+    .gt-game-case-study-wrapper .gt-game-case-image, .playnest-search-features article,
+    .gt-testimonial-wrapper-3 .testimonial-content .gt-testimonial-card-item,
+    .gt-testimonial-wrapper-3 .playnest-customer-gallery) {
+  border: 1px solid var(--mobile-stroke);
+  border-radius: var(--mobile-radius);
+  background: var(--mobile-card);
+}
+
+.playnest-home > .playnest-gta-feature {
+  padding-block: 18px 24px;
+  background: linear-gradient(var(--mobile-hero-base), var(--mobile-base));
+}
+
+.playnest-home .playnest-gta-feature__card {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.playnest-home .playnest-gta-feature__image {
+  display: block;
+  aspect-ratio: 16 / 10;
+}
+
+.playnest-home .playnest-gta-feature__image img {
+  display: block;
+  object-position: center 37%;
+}
+
+.playnest-home .playnest-gta-feature__content {
+  padding: clamp(16px, 5vw, 24px);
+}
+
+.playnest-home .playnest-gta-feature__content p {
+  margin: 10px 0 16px;
+  color: var(--mobile-copy);
+  line-height: 1.5;
+}
+
+.playnest-home .playnest-gta-feature__actions {
+  display: grid;
+  gap: 8px;
+}
+
+.playnest-home .playnest-gta-feature__actions .gt-theme-btn {
+  padding-inline: 12px;
+}
+
+@media (min-width: 360px) {
+  .playnest-home .playnest-gta-feature__actions {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  }
+}
+
+.playnest-home .about-wrapper-7 .about-image-2 {
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  animation: none;
+  transform: none;
+}
+
+.playnest-home .about-wrapper-7 .about-image-2 > img {
+  display: block;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.playnest-home .about-wrapper-7 .about-image-2 .ellipse-shape,
+.playnest-home .about-wrapper-7 .about-box-wrapper::before,
+.playnest-home .about-wrapper-7 .about-box-wrapper::after {
+  display: none;
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-text {
+  margin: 10px 0 16px;
+  color: var(--mobile-copy);
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: none;
+  margin: 0;
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper .about-box-item {
+  display: contents;
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper .about-box-item .about-box {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  padding: clamp(12px, 3.5vw, 18px);
+  border: 1px solid var(--mobile-stroke);
+  border-radius: var(--mobile-radius);
+  background: var(--mobile-card);
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper .about-box .icon img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  transform: none;
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper .about-box .content h5 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  line-height: 1.18;
+  font-weight: 700;
+}
+
+.playnest-home .about-wrapper-7 .about-content .about-box-wrapper .about-box .content p {
+  margin: 0;
+  color: var(--mobile-copy);
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.playnest-home > .service-section-7 {
+  padding-block: 0 28px;
+  background-image: none !important;
+}
+
+.playnest-home .service-section-7::before,
+.playnest-home .service-wrapper-7 .service-box::before,
+.playnest-home .service-wrapper-7 .service-box > span {
+  display: none;
+}
+
+.playnest-home .service-wrapper-7 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-block: 0;
+}
+
+.playnest-home .service-wrapper-7 .service-box {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--mobile-stroke) !important;
+  border-radius: 16px;
+  background: var(--mobile-card);
+  transform: none;
+  writing-mode: horizontal-tb;
+}
+
+.playnest-home .service-wrapper-7 .service-box:first-child {
+  grid-column: 1 / -1;
+}
+
+.playnest-home .service-wrapper-7 .service-box .title {
+  height: 100%;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.playnest-home .service-wrapper-7 .service-box .title a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 100%;
+  min-height: 54px;
+  padding: 10px 12px;
+  border-radius: 15px;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.playnest-home .service-wrapper-7 .service-box .title a::after {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  margin-right: 4px;
+  border: solid var(--mobile-accent);
+  border-width: 1.5px 1.5px 0 0;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.playnest-home > :is(.gt-game-case-study-section, .gt-testimonial-section-3) {
+  background-color: var(--mobile-deep);
+}
+
+.playnest-home .gt-game-case-study-section .section-title-area {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.playnest-home .gt-game-case-study-wrapper {
+  margin-top: 0;
+  border: 0;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-slider {
+  height: auto;
+  touch-action: pan-y;
+}
+
+.playnest-home .gt-game-case-slider .swiper-wrapper {
+  align-items: stretch;
+}
+
+.playnest-home .gt-game-case-slider .swiper-slide {
+  display: grid;
+  height: auto;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-image {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-image::before,
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-image .gt-number {
+  display: none;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-image > img {
+  display: block;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  clip-path: none !important;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-image .gt-game-case-content {
+  position: static;
+  padding: 15px 16px 18px;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-content .gt-box {
+  margin: 0 0 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--mobile-stroke);
+  border-radius: var(--mobile-pill);
+  color: var(--mobile-accent);
+  background: rgba(249, 94, 0, 0.1);
+  font-size: 13px;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-content h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.playnest-home .gt-game-case-study-wrapper .gt-game-case-content p {
+  margin: 5px 0 0;
+  color: var(--mobile-copy);
+  line-height: 1.4;
+}
+
+.playnest-home .gt-game-case-study-section .progress-bar-wrapper {
+  height: 3px;
+  margin-top: 12px;
+  border-radius: var(--mobile-pill);
+  overflow: hidden;
+}
+
+.playnest-home .gt-game-case-study-section .progress-line {
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f95e00, #ffae81);
+}
+
+.playnest-home .gt-game-case-study-section .dots-container {
+  justify-content: center;
+}
+
+.playnest-home .gt-game-case-study-section .dot {
+  display: grid;
+  width: min(44px, 16%);
+  height: 44px;
+  place-items: center;
+  margin: 0;
+  background: transparent;
+  transform: none;
+}
+
+.playnest-home .gt-game-case-study-section .dot::after {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--mobile-pill);
+  background: rgba(255, 255, 255, 0.4);
+  content: "";
+}
+
+.playnest-home .gt-game-case-study-section .dot.active::after {
+  width: 21px;
+  background: var(--mobile-accent);
+}
+
+.playnest-home .playnest-search-heading p {
+  margin: 10px 0 0;
+  color: var(--mobile-copy);
+  line-height: 1.5;
+}
+
+.playnest-home :is(.playnest-search-heading, .playnest-search-faq) a {
+  color: var(--mobile-accent);
+  text-underline-offset: 2px;
+}
+
+.playnest-home .playnest-search-features {
+  gap: 8px;
+  margin: 18px 0 28px;
+}
+
+.playnest-home .playnest-search-features article {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 3px 10px;
+  align-items: center;
+  padding: 13px 14px;
+}
+
+.playnest-home .playnest-search-features i {
+  margin: 0;
+  color: var(--mobile-accent);
+  font-size: 19px;
+}
+
+.playnest-home .playnest-search-features h3,
+.playnest-home .playnest-search-faq summary {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.playnest-home .playnest-search-features p {
+  grid-column: 2;
+  margin: 0;
+  color: var(--mobile-copy);
+  line-height: 1.4;
+}
+
+.playnest-home .playnest-search-faq h2 {
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.playnest-home .playnest-search-faq details,
+.playnest-home .playnest-search-faq details:last-child {
+  margin-bottom: 8px;
+  border: 1px solid var(--mobile-stroke);
+  border-radius: 16px;
+  background: var(--mobile-card);
+}
+
+.playnest-home .playnest-search-faq summary {
+  min-height: 46px;
+  padding: 12px 42px 12px 14px;
+  border-radius: inherit;
+}
+
+.playnest-home .playnest-search-faq summary::after {
+  top: 10px;
+  right: 14px;
+  color: var(--mobile-accent);
+  font-size: 21px;
+}
+
+.playnest-home .playnest-search-faq details p {
+  margin: 0;
+  padding: 0 14px 12px;
+  color: var(--mobile-copy);
+  line-height: 1.45;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-slider {
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: var(--mobile-radius);
+}
+
+.playnest-home .gt-testimonial-slider .swiper-slide {
+  height: auto;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .testimonial-content .gt-testimonial-card-item {
+  height: 100%;
+  margin: 0;
+  padding: 16px;
+  clip-path: none;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-card-item .gt-client-info {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .testimonial-content .gt-client-info .image {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--mobile-stroke);
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-card-item .gt-client-info .text h6 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-client-info p {
+  margin: 2px 0 0;
+  color: var(--mobile-accent);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-card-item .gt-testi-content {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testi-content .icon img {
+  display: block;
+  width: 16px;
+  height: auto;
+  margin-top: 4px;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-card-item .gt-testi-content p {
+  margin: 0;
+  color: var(--mobile-copy);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .swiper-dot .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  margin-inline: 5px;
+  border: 0;
+  border-radius: var(--mobile-pill);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .swiper-dot .swiper-pagination-bullet-active {
+  width: 20px;
+  background: var(--mobile-accent);
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .swiper-dot .swiper-pagination-bullet-active::before {
+  display: none;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .playnest-customer-gallery .swiper-slide {
+  height: auto;
+  aspect-ratio: 4 / 3;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-testimonial-image .gt-ratting-content {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 4px 0;
+  transform: none;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-ratting-content p {
+  margin: 0;
+  color: var(--mobile-copy);
+  font-size: 14px;
+}
+
+.playnest-home .gt-testimonial-wrapper-3 .gt-ratting-content .gt-star {
+  flex-shrink: 0;
+  color: var(--mobile-accent);
+  font-size: 12px;
+}
+
+.playnest-home :is(.playnest-gallery-prev, .playnest-gallery-next) {
+  width: 44px;
+  height: 44px;
+  background: rgba(38, 14, 8, 0.78);
+}

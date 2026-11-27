@@ -147,9 +147,11 @@
         <link rel="stylesheet" href="assets/css/nice-select.css">
         <!--<< Main.css >>-->
         <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/public-mobile.css?v=1" media="(max-width: 767px)">
+        <link rel="stylesheet" href="assets/css/home-mobile.css?v=2" media="(max-width: 767px)">
                             
     </head>
-    <body class="playnest-home">
+    <body class="playnest-public playnest-home">
 
          <!-- Preloader Start -->
         <div id="preloader" class="preloader">
@@ -665,12 +667,12 @@
                     </div>
                     <!-- Dots for slide navigation -->
                     <div class="dots-container">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>  
-                        <span class="dot"></span>  
+                        <button type="button" class="dot" aria-label="It Takes Two"></button>
+                        <button type="button" class="dot" aria-label="Split Fiction"></button>
+                        <button type="button" class="dot" aria-label="Overcooked"></button>
+                        <button type="button" class="dot" aria-label="EA Sports FC"></button>
+                        <button type="button" class="dot" aria-label="Mortal Kombat"></button>
+                        <button type="button" class="dot" aria-label="Nintendo Party"></button>
                     </div>
                 </div>
             </div>
@@ -900,7 +902,6 @@
                     </div>
                 </div>
             </div>
-            </div>
         </section>
 
 
@@ -913,7 +914,12 @@
                     <div class="col-xl-4 wow fadeInUp" data-wow-delay=".2s">
                         <div class="footer-single-item-5">
                             <div class="footer-content">
-                                <a href="index.html"><img src="assets/img/logo/footer-logo.svg" alt="PlayNest"></a>
+                                <a href="index.html">
+                                    <picture>
+                                        <source media="(max-width: 767px)" srcset="assets/img/figma/mobile-hero/white-logo.svg">
+                                        <img src="assets/img/logo/footer-logo.svg" width="230" alt="PlayNest">
+                                    </picture>
+                                </a>
                                 <p>
                                     PlayNest mang đến không gian giải trí riêng tư với PS5, Nintendo, Netflix và những tiện nghi dành cho cặp đôi, hội bạn.
                                 </p>
@@ -1063,7 +1069,7 @@
         <!--<< Wow Animation Js >>-->
         <script src="assets/js/wow.min.js"></script>
         <!--<< Main.js >>-->
-        <script src="assets/js/main.js"></script>
+        <script src="assets/js/main.js?v=home-mobile-1"></script>
 
     </body>
 </html>
