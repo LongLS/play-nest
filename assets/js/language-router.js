@@ -47,10 +47,19 @@
     'Có. Kho game gồm game co-op, party, thể thao, đua xe và nhiều lựa chọn dễ làm quen. Bạn có thể lọc trước theo số người chơi tại trang danh sách game.':'Yes. Our library includes co-op, party, sports, racing and beginner-friendly games. You can filter by number of players.',
     'Private Gaming Lounge PlayNest ở đâu tại Hà Nội?':'Where is PlayNest Private Gaming Lounge in Hanoi?','PlayNest nằm tại 146 Phố Trần Bình, Nam Từ Liêm, Hà Nội.':'PlayNest is at 146 Tran Binh Street, Nam Tu Liem, Hanoi.',
     'Đặt phòng game PlayNest như thế nào?':'How do I book a room at PlayNest?','Liên hệ Zalo hoặc hotline':'Message us on Zalo or call','để kiểm tra lịch trống, chọn phòng và nhận tư vấn game phù hợp.':'to check availability, choose a room and get game recommendations.',
-    'Khách hàng chia sẻ':'Customer stories','Những trải nghiệm đáng nhớ':'Memorable experiences','Đánh giá 5 sao trên Google':'5-star review on Google','Mình đã có trải nghiệm rất tốt ở đây với bạn bè. Chắc chắn sẽ quay lại nhé.':'I had a great experience here with my friends and will definitely come back.',
-    'Khách hàng PlayNest':'PlayNest customer','Quán đẹp, sạch sẽ, dịch vụ tốt, cho 5 sao. Uy tín.':'Beautiful and clean rooms with good service. Five stars.','Phòng mới sạch đẹp, nhiều hạng phòng và khuyến mãi.':'Clean new rooms with several room options and promotions.',
-    'Quản lý và nhân viên nhiệt tình, vì thấy gần nhà nên chạy qua thử mà ngồi 2 tiếng đồng hồ lận. Quản lý bảo vẫn sẽ gia tăng các game mà riêng các game hiện có đã hay khủng rồi. Mọi người qua thử trải nghiệm coi, oke lắm á.':'The manager and staff were very helpful. I stopped by to try it and stayed for two hours. The game library is already great and more games are coming.',
-    'Đã đánh giá PlayNest 5 sao trên Google.':'Rated PlayNest five stars on Google.','Khách hàng yêu thích PlayNest':'Why customers love PlayNest','PlayNest mang đến không gian giải trí riêng tư với PS5, Nintendo, Netflix và những tiện nghi dành cho cặp đôi, hội bạn.':'PlayNest offers private entertainment rooms with PS5, Nintendo, Netflix and amenities for couples and groups.',
+    'Khách hàng chia sẻ':'Customer stories','Những trải nghiệm đáng nhớ':'Memorable experiences',
+    'Đánh giá của khách hàng PlayNest':'PlayNest customer reviews',
+    '5 sao trên Google Maps':'5 stars on Google Maps',
+    'Ảnh tại PlayNest':'Photo taken at PlayNest',
+    'Xem bài gốc và ảnh':'View original review and photo',
+    'Xem tất cả đánh giá trên Google Maps':'Read all reviews on Google Maps',
+    'Phòng game PlayNest với màn hình lớn và bàn đồ ăn':'A PlayNest game room with a large screen and a table of food',
+    'Màn hình chiếu phim trong phòng riêng tại PlayNest':'A movie screen in a private room at PlayNest',
+    'Tay cầm Nintendo Switch và màn hình game tại PlayNest':'Nintendo Switch controllers and a game screen at PlayNest',
+    'Nhóm bạn tổ chức sinh nhật ở PlayNest và đều hài lòng. Linh Bùi khen phòng sạch, nhiều game và nhân viên nhiệt tình.':'Linh Bùi celebrated a birthday with friends at PlayNest. The group enjoyed the clean room, wide selection of games and helpful staff.',
+    'Hue Vu thấy không gian thoải mái cho gia đình có con nhỏ đi chơi cuối tuần. Bạn cũng khen phòng sạch, đẹp và có nhiều game.':'Hue Vu found PlayNest a comfortable weekend outing for families with young children and praised its clean, attractive rooms and choice of games.',
+    'Việt Nguyễn Mạnh thích vì có phòng cho cả cặp đôi lẫn nhóm bạn. Bạn đánh giá cao cách nhân viên hướng dẫn chơi và kho game PS5, Nintendo.':'Việt Nguyễn Mạnh liked the rooms for couples and groups, the staff’s help getting started, and the selection of PS5 and Nintendo games.',
+    'PlayNest mang đến không gian giải trí riêng tư với PS5, Nintendo, Netflix và những tiện nghi dành cho cặp đôi, hội bạn.':'PlayNest offers private entertainment rooms with PS5, Nintendo, Netflix and amenities for couples and groups.',
     'Khám phá PlayNest':'Explore PlayNest','Không gian phòng':'Our rooms','Bảng giá':'Pricing','Thông tin hữu ích':'Useful information','Điều khoản dịch vụ':'Terms of service','Bài viết PlayNest':'PlayNest blog','Chính sách riêng tư':'Privacy policy','Ưu đãi & combo':'Offers & combos','Gợi ý trò chơi':'Game recommendations','Câu hỏi thường gặp':'FAQs',
     'Để PlayNest gọi lại cho bạn':'Request a call from PlayNest','Để lại số điện thoại để PlayNest tư vấn phòng, lịch trống và game phù hợp với bạn.':'Leave your phone number and we will help you choose a room, time and suitable games.','Yêu cầu gọi lại':'Request a callback','© 2026 PlayNest. Đã đăng ký bản quyền.':'© 2026 PlayNest. All rights reserved.'
   };
@@ -58,7 +67,7 @@
     document.documentElement.lang='en';document.title=en[document.title]||document.title;
     var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
     while((node=walker.nextNode())){var value=node.nodeValue,key=value.trim();if(key&&en[key])node.nodeValue=value.replace(key,en[key]);}
-    document.querySelectorAll('[placeholder],[aria-label],[title]').forEach(function(el){['placeholder','aria-label','title'].forEach(function(a){var v=el.getAttribute(a);if(v&&en[v])el.setAttribute(a,en[v]);});});
+    document.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(function(el){['placeholder','aria-label','title','alt'].forEach(function(a){var v=el.getAttribute(a);if(v&&en[v])el.setAttribute(a,en[v]);});});
   }
   window.PlayNestLanguage={set:function(next){try{localStorage.setItem(KEY,next);}catch(e){}var url=new URL(location.href);url.searchParams.delete('lang');location.href=url.pathname+url.search+url.hash;}};
   document.addEventListener('DOMContentLoaded',function(){

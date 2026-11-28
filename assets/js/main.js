@@ -911,63 +911,6 @@
     }
 
      //>> Gt-Testimonial-slider Slider Start <<//
-    if ($('.gt-testimonial-slider').length > 0) {
-      const mobileReviews = window.matchMedia("(max-width: 767px)");
-      function createReviews(initialSlide = 0) {
-        return new Swiper('.gt-testimonial-slider', {
-          initialSlide,
-          spaceBetween: mobileReviews.matches ? 12 : 30,
-          speed: 600,
-          loop: true,
-          effect: mobileReviews.matches ? 'slide' : 'cards',
-          cardsEffect: {
-            perSlideOffset: 8,
-            perSlideRotate: 2,
-            slideShadows: false,
-          },
-          grabCursor: true,
-          autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-          },
-          pagination: {
-            el: '.gt-testimonial-wrapper-3 .swiper-dot > .dot',
-            clickable: true,
-          },
-        });
-      }
-      let reviews = createReviews();
-      mobileReviews.addEventListener("change", () => {
-        const currentReview = reviews.realIndex;
-        reviews.destroy(true, true);
-        reviews = createReviews(currentReview);
-      });
-    }
-
-    // PlayNest customer photo gallery: advance one image every 3 seconds.
-    if ($('.playnest-customer-gallery').length > 0) {
-      const playnestCustomerGallery = new Swiper('.playnest-customer-gallery', {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 350,
-        loop: true,
-        grabCursor: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        },
-        navigation: {
-          prevEl: '.playnest-gallery-prev',
-          nextEl: '.playnest-gallery-next',
-        },
-        pagination: {
-          el: '.playnest-gallery-pagination',
-          clickable: true,
-        },
-      });
-    }
-
     //>> Gt-Gallery Slider Start <<//
     if($('.gt-gallery-slider').length > 0) {
         const gtGallerySlider = new Swiper(".gt-gallery-slider", {

@@ -1,0 +1,142 @@
+.playnest-reviews__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 20px;
+}
+
+.playnest-reviews__header p {
+  margin: 0;
+  color: var(--mobile-accent, #ffab7f);
+  font-weight: 600;
+}
+
+.playnest-reviews__header h2 {
+  margin: 4px 0 0;
+}
+
+.playnest-reviews__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.playnest-review {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--mobile-stroke, rgba(255, 155, 112, 0.26));
+  border-radius: var(--mobile-radius, 20px);
+  background: var(--mobile-card, linear-gradient(150deg, #2a1712, #171213 72%));
+}
+
+.playnest-review__photo {
+  position: relative;
+  margin: 0;
+}
+
+.playnest-review__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.playnest-review__photo figcaption {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(19, 12, 9, 0.88);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.playnest-review__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.playnest-review__body h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.playnest-review__rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--mobile-accent, #ffab7f);
+  font-size: 14px;
+}
+
+.playnest-review__stars {
+  color: #ffb347;
+  letter-spacing: 1px;
+}
+
+.playnest-review__body p {
+  margin: 0;
+  color: var(--mobile-copy, #ead5cc);
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.playnest-reviews a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  color: var(--mobile-accent, #ffab7f);
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-transform: none;
+}
+
+.playnest-review__body a {
+  align-self: start;
+  margin-top: auto;
+}
+
+.playnest-reviews :is(a, .playnest-reviews__cards):focus-visible {
+  outline: 2px solid var(--mobile-accent, #ffab7f);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .playnest-reviews__header {
+    margin-bottom: 12px;
+  }
+
+  .playnest-reviews__cards {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(89%, 350px);
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    scrollbar-color: rgba(255, 171, 127, 0.55) transparent;
+    scrollbar-width: thin;
+  }
+
+  .playnest-review {
+    scroll-snap-align: start;
+  }
+}
